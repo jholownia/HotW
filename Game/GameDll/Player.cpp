@@ -1700,7 +1700,7 @@ void CPlayer::PostUpdateView(SViewParams &viewParams)
 	COffHand * pOffHand=static_cast<COffHand*>(GetWeaponByClass(CItem::sOffHandClass));
 	if(pOffHand && (pOffHand->GetOffHandState()&(eOHS_GRABBING_NPC|eOHS_HOLDING_NPC|eOHS_THROWING_NPC)))
 		pOffHand->PostFilterView(viewParams);
-
+	//
 	// (jaho) all this logic needs to go to camera
 	// (jh) debug
 			
