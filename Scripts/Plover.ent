@@ -1,0 +1,6 @@
+<!-- OBSOLETE ENTITY - NO ART ASSSETS-->
+<Entity 
+Name="Plover"
+ Script="Scripts/Entities/Boids/Plover.lua"
+ Invisible="1"
+/>

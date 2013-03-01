@@ -1,0 +1,31 @@
+<Blocks>
+ <Block name="CommonSignalVars" group="Common">
+  <Signal name="OnEnemySeen" variable="AwareOfEnemy" value="true"/>
+  <Signal name="OnEnemySeen" variable="TargetLost" value="false"/>
+  <Signal name="OnGroupEnemySeen" variable="AwareOfEnemy" value="true"/>
+  <Signal name="OnGroupUnderAttack" variable="AwareOfEnemy" value="true"/>
+  <Signal name="OnNoTarget" variable="AwareOfEnemy" value="false"/>
+  <Signal name="OnNoTarget" variable="AlertedUnderFire" value="false"/>
+  <Signal name="OnTargetLost" variable="TargetLost" value="true"/>
+  <Signal name="OnPressure" variable="Pressured" value="true"/>
+  <Signal name="OnNoSustainedPressure" variable="Pressured" value="false"/>
+  <Signal name="SetAssaultTarget" variable="AssaultTarget" value="true"/>
+  <Signal name="CancelAssaultTarget" variable="AssaultTarget" value="false"/>
+  <Signal name="AssaultTargetReached" variable="AssaultTarget" value="false"/>
+  <Signal name="TargetObject" variable="TargetObject" value="true"/>
+  <Signal name="TargetNotObject" variable="TargetObject" value="false"/>
+  <Signal name="OnForcedExecute" variable="ForcedExecute" value="true"/>
+  <Signal name="OnForcedExecuteComplete" variable="ForcedExecute" value="false"/>
+  <Signal name="OnCallReinforcements" variable="CallReinforcements" value="true"/>
+  <Signal name="CallReinforcementsDone" variable="CallReinforcements" value="false"/>
+ </Block>
+ <Block name="CommonVars" group="Common">
+  <Variable name="TargetObject"/>
+  <Variable name="TargetLost"/>
+  <Variable name="Pressured"/>
+  <Variable name="AwareOfEnemy"/>
+  <Variable name="AssaultTarget"/>
+  <Ref name="TargetThreatVars"/>
+  <Variable name="AlertedUnderFire"/>
+ </Block>
+</Blocks>

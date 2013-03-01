@@ -1,0 +1,4 @@
+<Entity
+ Name="TeamSoundSpot" 
+ Script="Scripts/Entities/Multiplayer/TeamSoundSpot.lua"
+/>

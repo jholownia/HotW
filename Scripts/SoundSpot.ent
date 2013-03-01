@@ -1,0 +1,4 @@
+<Entity
+ Name="SoundSpot"
+ Script="Scripts/Entities/Sound/SoundSpot.lua"
+/>

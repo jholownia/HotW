@@ -1,0 +1,95 @@
+<EntityScheduler>
+	<!-- game rules -->
+	<Class name="DeathMatch" policy="rule"/>
+	<Class name="Racing" policy="rule"/>
+		
+	<!-- actors -->
+	<Class name="Player" policy="dude" own="own"/>
+	<Class name="Grunt" policy="dude" />
+	
+	<!-- weapons -->
+	<Class name="Fists" policy="gun"/>
+	<Class name="SCAR" policy="gun"/>
+	<Class name="Binoculars" policy="gun"/>
+	<Class name="RocketLauncher" policy="gun"/>
+	<Class name="SCARAI" policy="gun"/>
+	<Class name="OffHand" policy="gun"/>
+	<Class name="AIGrenades" policy="gun"/>
+
+	<!-- vehicle weapons -->
+	<Class name="AsianCoaxialGun" policy="gun"/>
+	<Class name="TankCannon" policy="gun"/>
+	<Class name="VehicleShiTenV2" policy="gun"/>
+		
+	<!-- vehicles -->
+	<Class name="VehicleSeatSerializer" policy="cart" own="own"/>
+	<Class name="HMMWV" policy="car" own="own"/>
+	<Class name="MH60_Blackhawk" policy="car" own="own"/>
+	<Class name="Dodge_Charger" policy="car" own="own"/>
+	<Class name="Abrams" policy="car" own="own"/>
+	<Class name="Abrams_MP" policy="car" own="own"/>
+	<Class name="SpeedBoat" policy="car" own="own"/>
+	
+	<!-- basic physicalized objects -->
+	<Class name="Default" policy="phys"/>
+	<Class name="BasicEntity" policy="phys"/>
+	<Class name="DestroyableLight" policy="phys"/>
+	<Class name="DestroyableObject" policy="phys"/>
+	<Class name="PressurizedObject" policy="phys"/>
+	<Class name="RigidBodyEx" policy="phys"/>
+	<Class name="RopeEntity" policy="phys"/>
+	<Class name="InteractiveEntity" policy="phys"/>
+	<Class name="Tornado" policy="phys"/>
+	<Class name="Constraint" policy="phys"/>
+
+	<!-- projectiles -->
+	<Class name="bullet" policy="proj"/>
+	<Class name="rocket" policy="proj"/>
+	<Class name="tank125" policy="proj"/>
+
+	<!-- misc -->
+	<Class name="CustomAmmoPickup" policy="obj"/>
+	<Class name="CustomAmmoPickupLarge" policy="obj"/>
+	<Class name="CustomAmmoPickupMedium" policy="obj"/>
+	<Class name="CustomAmmoPickupSmall" policy="obj"/>
+	<Class name="SpawnPoint" policy="obj"/>
+	<Class name="Ladder" policy="obj"/>
+	<Class name="Factory" policy="capt"/>
+	<Class name="SpawnGroup" policy="capt"/>
+	<Class name="Door" policy="door"/>
+	<Class name="Elevator" policy="door"/>
+	<Class name="ElevatorSwitch" policy="door"/>
+	<Class name="Flag" policy="door"/>
+	<Class name="Hazard" policy="obj"/>
+	<Class name="AreaShape" policy="obj"/>
+	<Class name="AnimObject" policy="obj"/>
+	<Class name="TeamRandomSoundVolume" policy="obj"/>
+	<Class name="MusicMoodSelector" policy="obj"/>
+	<Class name="AreaBox" policy="obj"/>
+	<Class name="LightBox" policy="obj"/>
+	<Class name="LightShape" policy="obj"/>
+	<Class name="AreaSphere" policy="obj"/>
+	<Class name="ProximityTrigger" policy="obj"/>
+	<Class name="MusicThemeSelector" policy="obj"/>
+	<Class name="MusicEndTheme" policy="obj"/>
+	<Class name="WindArea" policy="obj"/>
+	<Class name="TagPoint" policy="obj"/>	
+	<Class name="Lightning" policy="obj"/>	
+	<Class name="GravityBox" policy="obj"/>	
+	<Class name="SpectatorPoint" policy="obj"/>
+	<Class name="FogVolume" policy="obj"/>
+	<Class name="AreaTrigger" policy="obj"/>
+	<Class name="MusicPlayPattern" policy="obj"/>	
+	<Class name="ForbiddenArea" policy="capt"/>
+	<Class name="AIAnchor" policy="obj"/>
+	<Class name="ParticleEffect" policy="obj"/>
+	<Class name="SmartObject" policy="obj"/>
+	<Class name="GeomEntity" policy="obj"/>
+	<Class name="AITerritory" policy="obj"/>
+	<Class name="AIWave" policy="obj"/>
+	<Class name="FlowgraphEntity" policy="obj"/>
+
+	<!-- fallback -->
+	<Default policy="obj"/>
+</EntityScheduler>
+

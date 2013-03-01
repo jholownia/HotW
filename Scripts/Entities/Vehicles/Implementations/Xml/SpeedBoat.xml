@@ -1,0 +1,355 @@
+<Vehicle name="SpeedBoat">
+ <Physics damping="0.05" pushable="0">
+  <Buoyancy waterDensity="225" waterResistance="300" waterDamping="0"/>
+  <Simulation maxTimeStep="0.02" minEnergy="0.16" maxLoggedCollisions="2"/>
+ </Physics>
+ <Damages collDamageThreshold="50">
+  <DamageMultipliers>
+   <DamageMultiplier damageType="melee" multiplier="0.0"/>
+   <DamageMultiplier damageType="bullet" multiplier="0.1"/>
+   <DamageMultiplier damageType="collision" multiplier="2"/>
+   <DamageMultiplier damageType="explosion" multiplier="2" splash="0.5"/>
+   <DamageMultiplier damageType="rocket" multiplier="2"/>
+  </DamageMultipliers>
+  <DamagesGroups>
+   <DamagesGroup name="Destroy" useTemplate="BoatDestroy">
+    <DamagesSubGroups>
+     <DamagesSubGroup delay="0" randomness="0.5">
+      <DamageBehaviors>
+       <DamageBehavior class="Impulse" damageRatioMin="1" ignoreVehicleDestruction="0">
+        <Impulse forceMin="6" forceMax="7" direction="0,0,1" momentum="0.75,0.85,0" helper="wakePos"/>
+       </DamageBehavior>
+      </DamageBehaviors>
+     </DamagesSubGroup>
+    </DamagesSubGroups>
+   </DamagesGroup>
+  </DamagesGroups>
+ </Damages>
+ <Components>
+  <Component name="hull" damageMax="600" major="1" minBound="0,0,0" maxBound="0,0,0" useBoundsFromParts="0" id="idHull">
+   <DamageBehaviors>
+    <DamageBehavior class="Group" damageRatioMin="1">
+     <Group name="Destroy"/>
+    </DamageBehavior>
+    <DamageBehavior class="Indicator" damageRatioMin="0.75">
+     <Indicator>
+      <Light material="" sound="sounds/vehicles:vehicle_accessories:warning_beep_boat" soundRatioMin="0.75" helper="driver_sit_pos"/>
+     </Indicator>
+    </DamageBehavior>
+    <DamageBehavior class="Effect" damageRatioMin="0.25" damageRatioMax="0.75" ignoreVehicleDestruction="1">
+     <Effect effect="HullDamaged25"/>
+    </DamageBehavior>
+    <DamageBehavior class="Effect" damageRatioMin="0.75" damageRatioMax="1" ignoreVehicleDestruction="1">
+     <Effect effect="HullDamaged75"/>
+    </DamageBehavior>
+   </DamageBehaviors>
+  </Component>
+  <Component name="leftEngine" damageMax="150" major="1" minBound="-0.84890002,-4.79,0.31600001" maxBound="-0.114,-3.7,2.2" useBoundsFromParts="0" hullAffection="1">
+   <DamageMultipliers/>
+   <DamageBehaviors>
+		<DamageBehavior class="MovementNotification" damageRatioMin="0.25">
+			<MovementNotification isFatal="0"/>
+		</DamageBehavior>
+		<DamageBehavior class="Effect" damageRatioMin="0.75">
+			<Effect effect="leftEngineSmoke" disableAfterExplosion="1"/>
+		</DamageBehavior>
+		<DamageBehavior class="Burn" damageRatioMin="0.75">
+			<Burn damage="1" helper="vehicleBurnPos" interval="0.5" radius="1.5" selfDamage="8"/>
+		</DamageBehavior>
+	</DamageBehaviors>
+  </Component>
+  <Component name="rightEngine" damageMax="150" major="1" minBound="0.1082,-4.7930002,0.28999999" maxBound="0.80299997,-3.7,2.2" useBoundsFromParts="0" hullAffection="1">
+   <DamageMultipliers/>
+   <DamageBehaviors>
+		<DamageBehavior class="MovementNotification" damageRatioMin="0.25">
+			<MovementNotification isFatal="0"/>
+		</DamageBehavior>
+		<DamageBehavior class="Effect" damageRatioMin="0.75">
+			<Effect effect="rightEngineSmoke" disableAfterExplosion="1"/>
+		</DamageBehavior>
+		<DamageBehavior class="Burn" damageRatioMin="0.75">
+			<Burn damage="1" helper="vehicleBurnPos" interval="0.5" radius="1.5" selfDamage="8"/>
+		</DamageBehavior>
+	</DamageBehaviors>
+  </Component>
+  <Component name="FlippedOver" damageMax="1" major="0" minBound="0,0,0" maxBound="0,0,0" useBoundsFromParts="1">
+   <DamageBehaviors>
+    <DamageBehavior class="Effect" damageRatioMin="1">
+     <Effect effect="VehicleFlipped" disableAfterExplosion="1"/>
+    </DamageBehavior>
+    <DamageBehavior class="Burn">
+     <Burn helper="" damage="0" selfDamage="40" radius="5" interval="0.5"/>
+    </DamageBehavior>
+   </DamageBehaviors>
+  </Component>
+ </Components>
+ <Parts>
+  <Part name="chassis" class="Animated" mass="0" disablePhysics="0">
+   <Parts>
+    <Part name="steering_wheel" class="AnimatedJoint" mass="0">
+     <AnimatedJoint />
+    </Part>
+   </Parts>
+   <Animated filename="Objects/Vehicles/speedboat/speedboat.cga" filenameDestroyed="Objects/Vehicles/speedboat/speedboat_damaged.cga" id="idAnimatedPart"/>
+  </Part>
+  <Part name="mass" class="MassBox" component="" mass="2500" position="0,-0.25,-0.25" disablePhysics="0" disableCollision="0" isHidden="0">
+   <Helpers />
+   <MassBox size="1.7,5.5,1"/>
+  </Part>
+  <Part name="navLight" class="Light" helper="navLight">
+   <Light type="HeliGreen"/>
+  </Part>
+ </Parts>
+ <Helpers>
+	<Helper name="driver_eye_pos" position="0,1,2.5" direction="0,1,-0.1"/>
+	<Helper name="driver_sit_pos" position="0,0.926,1.6" direction="0,1,0"/>
+	<Helper name="driver_enter_left" position="-2.5,2.5,.51" direction="1,0,0" part="chassis"/>
+	<Helper name="passenger_enter_left1" position="-2.5,-2,0.51" direction="1,0,0" part="chassis"/>
+	<Helper name="passenger_enter_left2" position="-2.5,-0.5,0.51" direction="1,0,0" part="chassis"/>
+	<Helper name="passenger_enter_left3" position="-2.5,1,0.51" direction="1,0,0" part="chassis"/>
+	<Helper name="passenger_enter_right1" position="2.5,-2,0.51" direction="-1,0,0" part="chassis"/>
+	<Helper name="passenger_enter_right2" position="2.5,0,0.51" direction="-1,0,0" part="chassis"/>
+	<Helper name="passenger_enter_right3" position="2.5,2,0.51" direction="-1,0,0" part="chassis"/>
+	<Helper name="passenger_sit_01" position="-0.7207,-0.2,1.6" direction="0,1,0" part="chassis"/>
+	<Helper name="passenger_sit_02" position="-0.0171,-0.2,1.6" direction="0,1,0" part="chassis"/>
+	<Helper name="passenger_sit_03" position="0.7158,-0.2,1.6" direction="0,1,0" part="chassis"/>
+	<Helper name="passenger_sit_04" position="-0.7207,-1,1.6" direction="0,-1,0" part="chassis"/>
+	<Helper name="passenger_sit_05" position="-0.0171,-1,1.6" direction="0,-1,0" part="chassis"/>
+	<Helper name="passenger_sit_06" position="0.7158,-1,1.6" direction="0,-1,0" part="chassis"/>
+	<Helper name="propeller_left_pos" position="-0.48,-4.5,0.32" direction="0,-1,0"/>
+	<Helper name="propeller_right_pos" position="0.5,-4.5,0.32" direction="0,-1,0"/>
+	<Helper name="leftEngineSmokePos" position="-0.48,-4.6,1.85" direction="0,-1,0"/>
+	<Helper name="rightEngineSmokePos" position="0.5,-4.6,1.85" direction="0,-1,0"/>
+	<Helper name="sprayLeftPos" position="-0.47,2,0" direction="-1,0,0"/>
+	<Helper name="sprayRightPos" position="0.47,2,0" direction="1,0,0"/>
+	<Helper name="wakePos" position="0,2,0" direction="0,1,0"/>
+	<Helper name="splashPos" position="0,3,0" direction="0,1,0"/>
+	<Helper name="cornerForcePos" position="0,-0.1875,0.85" direction="0,1,0"/>
+	<Helper name="pushForcePos" position="0,-2.75,0.1" direction="0,1,0"/>
+	<Helper name="engineSoundPos" position="0,-4.2,1.7" direction="0,-1,0"/>
+	<Helper name="centerPos" position="0,0.0122,0.85" direction="0,1,0"/>
+	<Helper name="vehicleBurnPos" position="0,0.56,1.0754" direction="0,1,0"/>
+	<Helper name="navLight" position="-1.3,-3.5,2.26" direction="0,0,0" part="chassis"/>
+ </Helpers>
+ <Actions>
+ </Actions>
+ <Seats>
+  <Seat name="driver" part="" enterHelper="driver_enter_left" sitHelper="driver_sit_pos" isDriver="1" AimPart="" seatGroupIndex="1" actionMap="vehicle_driver">
+   <Views>
+    <View class="FirstPerson" canRotate="1" rotationMin="-20,0,-70" rotationMax="20,0,70">
+     <FirstPerson offset="0,0,0.25" relativeToHorizon="0.5" />
+    </View>
+	<!-- <View class="ActionThirdPerson" canRotate="1" rotationMax="0,0,45">
+     <ActionThirdPerson cameraPosOffset="0,0,0.75" cameraAimOffset="0,0,1" lagSpeed="10" velocityMult="0.5,-0.2,0.25" heightAboveWater="0.75" />
+    </View>-->
+	<View class="ThirdPerson" canRotate="1">
+	 <ThirdPerson distance="7" heightoffset="5" speed="50"/>
+	</View>
+   </Views>
+   <SeatActions>
+    <SeatAction class="Sound">
+     <Sound sound="Sounds/vehicles:SpeedBoat:horn" helper="driver_sit_pos" id="seatActionSound1"/>
+    </SeatAction>
+    <SeatAction class="SteeringWheel">
+     <SteeringWheel vehicleAnimation="steeringWheel">
+      <Actions anglesMax="0,130,0"/>
+     </SteeringWheel>
+    </SeatAction>
+	<SeatAction class="Lights">
+     <Lights activation="toggle">
+      <LightParts>
+       <LightPart value="navLight"/>
+      </LightParts>
+     </Lights>
+    </SeatAction>
+   </SeatActions>
+   <Sounds inout="0" mood="0.6" id="idSeatSoundsLF"/>
+  </Seat>
+  <Seat name="passenger_01" part="" enterHelper="passenger_enter_left1" sitHelper="passenger_sit_01" isDriver="0" AimPart="" seatGroupIndex="2">
+   <Views>
+    <View class="FirstPerson" canRotate="1" rotationMin="-30,0,-70" rotationMax="20,0,70">
+     <FirstPerson offset="0,0,0"/>
+    </View>
+	<View class="ThirdPerson" canRotate="1">
+	 <ThirdPerson distance="7" heightoffset="5" speed="50"/>
+	</View>
+   </Views>
+   <SeatActions />
+   <Sounds inout="1"/>
+  </Seat>
+  <Seat name="passenger_02" part="" enterHelper="passenger_enter_left2" sitHelper="passenger_sit_02" isDriver="0" AimPart="" seatGroupIndex="2">
+   <Views>
+    <View class="FirstPerson" canRotate="1" rotationMin="-30,0,-70" rotationMax="20,0,70">
+     <FirstPerson offset="0,0,0"/>
+    </View>
+	<View class="ThirdPerson" canRotate="1">
+	 <ThirdPerson distance="7" heightoffset="5" speed="50"/>
+	</View>
+   </Views>
+   <SeatActions />
+   <Sounds inout="1"/>
+  </Seat>
+  <Seat name="passenger_03" part="" enterHelper="passenger_enter_left3" sitHelper="passenger_sit_03" isDriver="0" AimPart="" seatGroupIndex="2">
+   <Views>
+    <View class="FirstPerson" canRotate="1" rotationMin="-30,0,-70" rotationMax="20,0,70">
+     <FirstPerson offset="0,0,0"/>
+    </View>
+	<View class="ThirdPerson" canRotate="1">
+	 <ThirdPerson distance="7" heightoffset="5" speed="50"/>
+	</View>
+   </Views>
+   <SeatActions />
+   <Sounds inout="1"/>
+  </Seat>
+  <Seat name="passenger_04" part="" enterHelper="passenger_enter_right1" sitHelper="passenger_sit_04" isDriver="0" AimPart="" seatGroupIndex="3">
+   <Views>
+    <View class="FirstPerson" canRotate="1" rotationMin="-30,0,-70" rotationMax="20,0,70">
+     <FirstPerson offset="0,0,0"/>
+    </View>
+	<View class="ThirdPerson" canRotate="1">
+	 <ThirdPerson distance="7" heightoffset="5" speed="50"/>
+	</View>
+   </Views>
+   <SeatActions />
+   <Sounds inout="1"/>
+  </Seat>
+  <Seat name="passenger_05" part="" enterHelper="passenger_enter_right2" sitHelper="passenger_sit_05" isDriver="0" AimPart="" seatGroupIndex="3">
+   <Views>
+    <View class="FirstPerson" canRotate="1" rotationMin="-30,0,-70" rotationMax="20,0,70">
+     <FirstPerson offset="0,0,0"/>
+    </View>
+	<View class="ThirdPerson" canRotate="1">
+	 <ThirdPerson distance="7" heightoffset="5" speed="50"/>
+	</View>
+   </Views>
+   <SeatActions />
+   <Sounds inout="1"/>
+  </Seat>
+  <Seat name="passenger_06" part="" enterHelper="passenger_enter_right3" sitHelper="passenger_sit_06" isDriver="0" AimPart="" seatGroupIndex="3">
+   <Views>
+    <View class="FirstPerson" canRotate="1" rotationMin="-30,0,-70" rotationMax="20,0,70">
+     <FirstPerson offset="0,0,0"/>
+    </View>
+	<View class="ThirdPerson" canRotate="1">
+	 <ThirdPerson distance="7" heightoffset="5" speed="50"/>
+	</View>
+   </Views>
+   <SeatActions />
+   <Sounds inout="1"/>
+  </Seat>
+ </Seats>
+ <MovementParams>
+  <StdBoat
+	velMax="35"
+	velMaxReverse="10"
+	acceleration="5"
+	accelerationVelMax="0.5"
+	accelerationMultiplier="1"
+	pushHelper="pushForcePos"
+	pushTilt="2"
+	turnRateMax="1"
+	turnAccel="0.9"
+	turnAccelMultiplier="1"
+	turnDamping="1.5"
+	cornerForce="2.5"
+	cornerHelper="cornerForcePos"
+	cornerTilt="0"
+	waveIdleStrength="0.8,0.2,0"
+	waveEffect="Vehicles.Common.Sea.Light.Bounce">
+   <SoundParams engineSoundPosition="engineSoundPos" runSoundDelay="1" rpmPitchSpeed="1.2"/>
+   <Animations engine="propeller"/>
+   <Boost endurance="8" regeneration="8" strength="10" />
+  </StdBoat>
+ </MovementParams>
+ <Particles>
+  <Exhaust insideWater="1" outsideWater="0">
+   <Helpers>
+    <Helper value="propeller_right_pos"/>
+    <Helper value="propeller_left_pos"/>
+   </Helpers>
+   <EngineStart effect="Vehicles.SpeedBoat.Engine.Start"/>
+   <EngineStop effect="Vehicles.SpeedBoat.Engine.Stop"/>
+   <EngineRunning
+	   effect="Vehicles.SpeedBoat.Engine.Running"
+	   boostEffect="Vehicles.SpeedBoat.Engine.Boost"
+	   baseSizeScale="1"
+	   minSpeed="0"
+	   minSpeedSizeScale="0.2"
+	   minSpeedCountScale="1"
+	   minSpeedSpeedScale="1"
+	   maxSpeed="30"
+	   maxSpeedSizeScale="1.25"
+	   maxSpeedCountScale="2"
+	   maxSpeedSpeedScale="1"
+	   minPower="0"
+	   minPowerSizeScale="1"
+	   minPowerCountScale="1"
+	   minPowerSpeedScale="1"
+	   maxPower="1"
+	   maxPowerSizeScale="1"
+	   maxPowerCountScale="1"
+	   maxPowerSpeedScale="1"
+	   disableWithNegativePower="0" />
+  </Exhaust>
+  <DamageEffects>
+   <DamageEffect name="leftEngineSmoke" helper="leftEngineSmokePos" effect="Vehicles.SpeedBoat.Damage.Engine_L"/>
+   <DamageEffect name="rightEngineSmoke" helper="rightEngineSmokePos" effect="Vehicles.SpeedBoat.Damage.Engine_R"/>
+   <DamageEffect name="VehicleDestroyed" helper="" effect="Vehicles.SpeedBoat.Damage.Destroyed"/>
+   <DamageEffect name="VehicleFlipped" helper="centerPos" effect="Vehicles.SpeedBoat.Damage.Flipped"/>
+   <DamageEffect name="HullDamaged25" helper="vehicleBurnPos" effect="Vehicles.SpeedBoat.Damage.Hull_25" scaleMax="1" gravityDirection="0,0,0" pulsePeriod="0"/>
+   <DamageEffect name="HullDamaged75" helper="vehicleBurnPos" effect="Vehicles.SpeedBoat.Damage.Hull_75" scaleMax="1" gravityDirection="0,0,0" pulsePeriod="0"/>
+  </DamageEffects>
+  <EnvironmentLayers>
+   <EnvironmentLayer
+	   minSpeed="0.1"
+	   minSpeedSizeScale="1"
+	   minSpeedCountScale="1"
+	   minSpeedSpeedScale="1"
+	   maxSpeed="10"
+	   maxSpeedSizeScale="4"
+	   maxSpeedCountScale="1"
+	   maxSpeedSpeedScale="1"
+	   minPowerSizeScale="1"
+	   minPowerCountScale="1"
+	   maxPowerSizeScale="1"
+	   maxPowerCountScale="1">
+    <Alignment alignGroundHeight="0" maxHeightSizeScale="1" maxHeightCountScale="1" alignToWater="1"/>
+    <Emitters>
+     <Helper value="wakePos"/>
+    </Emitters>
+    <Wheels />
+   </EnvironmentLayer>
+   <EnvironmentLayer
+	   name="spray"
+	   minSpeed="0.5"
+	   minSpeedSizeScale="0.3"
+	   minSpeedCountScale="1"
+	   maxSpeed="1"
+	   maxSpeedSizeScale="3"
+	   maxSpeedCountScale="1"
+	   minPowerSizeScale="1"
+	   minPowerCountScale="1"
+	   maxPowerSizeScale="1"
+	   maxPowerCountScale="1">
+    <Alignment alignGroundHeight="0" maxHeightSizeScale="1" maxHeightCountScale="1" alignToWater="1"/>
+    <Emitters>
+     <Helper value="sprayLeftPos"/>
+     <Helper value="sprayRightPos"/>
+    </Emitters>
+    <Wheels />
+   </EnvironmentLayer>
+  </EnvironmentLayers>
+ </Particles>
+ <Animations>
+  <Animation name="steeringWheel" part="chassis">
+   <States>
+    <State name="" animation="asian_steeringWheel" isLooped="1" speedDefault="1" speedMin="1" speedMax="1"/>
+   </States>
+  </Animation>
+  <Animation name="propeller" part="chassis">
+   <States>
+    <State name="" animation="asian_rotor" isLooped="1" speedDefault="0.1" speedMin="0.1" speedMax="1"/>
+   </States>
+  </Animation>
+ </Animations>
+</Vehicle>

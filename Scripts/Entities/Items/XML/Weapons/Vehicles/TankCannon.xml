@@ -1,0 +1,45 @@
+<item name="TankCannon" class="VehicleWeapon" invisible="1" >
+	<params>
+		<param name="giveable" value="0" />
+		<param name="selectable" value="0" />
+		<param name="pickable" value="0" />
+		<param name="mountable" value="1" />
+		<param name="usable" value="0" />
+		<param name="arms" value="0" />
+	</params>
+	<ammos>
+		<ammo name="tank125" extra="30" amount="0" />
+	</ammos>
+	<actions>
+  	<action name="fire">
+		<sound target="firstperson" name="sounds/weapons:tank_main_cannon:fire_fp" radius="500" static="1" />
+		<sound target="thirdperson" name="sounds/weapons:tank_main_cannon:fire_3p" radius="500" static="1" />
+  	</action>
+  	<action name="reload">
+  		<sound target="firstperson" name="sounds/vehicles:abrams:hatch_close" radius="50" static="1" />
+  	</action>
+  </actions>
+	<firemodes>
+		<firemode name="Automatic" type="Automatic">
+			<fire>
+				<param name="ammo_type" value="tank125" />
+				<param name="clip_size" value="-1" />
+				<param name="rate" value="15" />
+				<param name="damage" value="600" />
+				<param name="reload_time" value="4.0" />
+			</fire>
+			<recoil>
+				<param name="impulse" value="50000" />
+			</recoil>
+			<muzzleflash>
+				<firstperson effect="weapon_fx.tank.tank125.muzzle_flash.muzzle_flash" helper="cannonOut" light_helper="cannonOut" light_radius="20" light_time="0.06" light_color="236,183,83" light_diffuse_mult="10" />
+				<thirdperson effect="weapon_fx.tank.tank125.muzzle_flash.muzzle_flash" helper="cannonOut" light_helper="cannonOut" light_radius="20" light_time="0.06" light_color="236,183,83" light_diffuse_mult="10" />
+			</muzzleflash>
+			<dust>
+			  <param name="mfxtag" value="dust_tankcannon" />
+			  <param name="maxheight" value="10" />
+			  <param name="maxheightscale" value="0.5" />
+			</dust>
+		</firemode>
+	</firemodes>
+</item>

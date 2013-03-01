@@ -1,0 +1,8 @@
+<SelectionTrees>
+ <SelectionTree name="Flyer" type="BehaviorSelectionTree">
+  <Variables />
+  <SignalVariables />
+  <LeafTranslations />
+  <Leaf name="FlyerIdle"/>
+ </SelectionTree>
+</SelectionTrees>

@@ -1,0 +1,5 @@
+<!-- OBSOLETE ENTITY -->
+<Entity
+ Name="RigidBodyLight" 
+ Script="Scripts/Entities/Lights/RigidBodyLight.lua"
+/>

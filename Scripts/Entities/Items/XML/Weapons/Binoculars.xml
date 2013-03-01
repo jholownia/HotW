@@ -1,0 +1,85 @@
+<item name="Binoculars" class="Binocular" category="utility" priority="0">
+	<params>
+		<param name="giveable" 		value="1" />
+		<param name="selectable" 	value="1" />
+		<param name="droppable" 	value="1" />
+		<param name="pose" 			value="melee" />
+		<param name="ui_weapon" 	value="1" />
+	</params>
+	<geometry>
+		<firstperson name="Objects/Weapons/Binoculars/binoculars_fp.chr"/>
+		<thirdperson name="Objects/Weapons/Binoculars/binoculars_tp.cgf"/>
+	</geometry>
+	
+	<actions>
+		<action name="select">
+			<animation target="firstperson" name="select_binoculars_fp" />
+			<animation target="owner" name="select" />
+			<sound target="firstperson" name="Sounds/weapons:weapon_accessories:binoculars_select" radius="5" />
+		</action>
+		<action name="idle_relaxed">
+			<animation target="firstperson" name="idle_binoculars_fp"/>
+			<animation target="owner" name="idle" />
+		</action>
+		<action name="raise">
+			<animation target="firstperson" name="raise_binoculars_fp" />
+		</action>
+		<action name="lower">
+			<animation target="firstperson" name="back_to_idle_binoculars_fp" />
+			<sound target="firstperson" name="Sounds/weapons:weapon_accessories:binoculars_select" radius="5" />
+		</action>
+		<action name="idle_raised">
+			<animation target="firstperson" name="idle_raised_animation" />
+			<animation target="owner" name="" />
+		</action>
+		<action name="nightvision_on">
+			<sound target="firstperson" name="Sounds/weapons:weapon_accessories:nightvision_on" radius="5" />
+		</action>
+		<action name="nightvision_off">
+			<sound target="firstperson" name="Sounds/weapons:weapon_accessories:nightvision_off" radius="5" />
+		</action>
+		<action name="zoom_in">
+			<sound target="firstperson" name="Sounds/weapons:weapon_accessories:binoculars_zoom_in" radius="5" />
+		</action>
+		<action name="zoom_out">
+			<sound target="firstperson" name="Sounds/weapons:weapon_accessories:binoculars_zoom_out" radius="5" />
+		</action>
+		<action name="pickedup">
+			<sound target="firstperson" name="Sounds/weapons:weapon_accessories:pickup_weapon_fp" radius="5" />
+			<sound target="thirdperson" name="Sounds/weapons:weapon_accessories:pickup_weapon_3p" radius="5" />
+		</action>
+	</actions>
+	
+	<zoommodes>
+		<zoommode type="Scope" name="Scope" >
+			<zoom>
+				<param name="dof_mask" value="textures/weapons/binocular_blurmask.dds" />
+				<param name="zoom_in_time" value="0.2" />
+				<param name="zoom_out_time" value="0.2" />
+				<stages>
+					<stage value="2" />
+					<stage value="4" />
+					<stage value="8" />
+				</stages>
+			</zoom>
+			<zoomSway>
+				<param name="maxX" value="0.012" />
+				<param name="maxY" value="0.015" />
+				<param name="stabilizeTime" value="1.5"/>
+				<param name="minScale" value="0.2"/>
+				<param name="strengthScale" value="0.75"/>
+				<param name="strengthScaleTime" value="0.75"/>
+				<param name="crouchScale" value="0.75"/>
+				<param name="proneScale" value="0.5"/>
+			</zoomSway>
+			<scope>
+				<param name="scope" value="scope_binoculars" />
+			</scope>
+			<viewmodes>
+				<viewmode>
+					<param name="mode" value="normal" />
+				</viewmode>
+			</viewmodes>
+		</zoommode>
+	</zoommodes>
+</item>

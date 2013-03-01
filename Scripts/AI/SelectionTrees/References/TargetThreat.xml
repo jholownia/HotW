@@ -1,0 +1,8 @@
+<Blocks>
+ <Block name="TargetThreatVars" group="TargetThreat">
+  <Variable name="TargetThreatSuspected"/>
+  <Variable name="TargetThreatInteresting"/>
+  <Variable name="TargetThreatThreatening"/>
+  <Variable name="TargetThreatAggressive"/>
+ </Block>
+</Blocks>

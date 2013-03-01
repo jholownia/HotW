@@ -1,0 +1,25 @@
+<SelectionTrees>
+ <SelectionTree name="BasicAI" type="BehaviorSelectionTree">
+  <Variables>
+   <Variable name="AwareOfEnemy" default="false"/>
+   <Variable name="TargetLost" default="false"/>
+   <Variable name="Interested" default="false"/>
+  </Variables>
+  <SignalVariables>
+   <Signal name="OnInterestingSoundHeard" variable="Interested" value="true"/>
+   <Signal name="OnEnemySeen" variable="AwareOfEnemy" value="true"/>
+   <Signal name="OnEnemySeen" variable="TargetLost" value="false"/>
+   <Signal name="OnNoTarget" variable="TargetLost" value="false"/>
+   <Signal name="OnNoTarget" variable="AwareOfEnemy" value="false"/>
+   <Signal name="OnNoTarget" variable="Interested" value="false"/>
+   <Signal name="OnLostSightOfTarget" variable="TargetLost" value="true"/>
+   <Signal name="OnLostSightOfTarget" variable="AwareOfEnemy" value="false"/>
+   <Signal name="OnLostSightOfTarget" variable="Interested" value="false"/>
+  </SignalVariables>
+  <LeafTranslations />
+  <Priority name="Root">
+   <Leaf name="BasicAIAttack_ST" condition="Interested or AwareOfEnemy"/>
+   <Leaf name="BasicAIIdle_ST" condition="TargetLost or !AwareOfEnemy"/>
+  </Priority>
+ </SelectionTree>
+</SelectionTrees>

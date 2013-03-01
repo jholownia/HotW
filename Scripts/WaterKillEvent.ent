@@ -1,0 +1,4 @@
+<Entity 
+Name="WaterKillEvent"
+ Script="Scripts/Entities/Others/WaterKillEvent.lua"
+/>

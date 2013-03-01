@@ -1,0 +1,25 @@
+<StatsConfig version='4'>
+<!--EXAMPLE:
+	<group name="server">
+		<stat keyName="hostname" 	keyId = '5' />
+		<stat keyName="mapname"		keyId = '6' />
+		<stat keyName="gametype" 	keyId = '7' />
+		<stat keyName="gamever"		keyId = '12'/>
+	</group>
+
+	<group name="player_stats">
+		<stat keyName="shots" 	keyId = '8'	/>
+		<stat keyName="hits" 	keyId = '9'	/>
+		<stat keyName="damage"	keyId = '10'/>
+		<stat keyName="melee"	keyId = '11'/>
+		<stat keyName="played"	keyId = '13'/>
+	</group>
+
+	<category name = "mode" mod = "5">
+		<stat code = "0" display = ""/>
+		<stat code = "1" display = "InstantAction"	keyName="PlayedInstantAction" keyId = '14'/>
+		<stat code = "2" display = "PowerStruggle"	keyName="PlayedPowerStruggle" keyId = '15'/>
+		<stat code = "3" display = "TeamAction"		keyName="PlayedTeamAction" 	  keyId = '16'/>
+	</category>
+-->
+</StatsConfig>

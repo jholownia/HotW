@@ -1,0 +1,51 @@
+<!-- OBSOLETE ENTITY -->
+<item name="RefWeapon" class="ReferenceWeapon" category="debug" priority="0" invisible="1">
+	<params>
+		<param name="debug" 			value="1" />
+		<param name="giveable" 		value="0" />
+		<param name="selectable" 	value="1" />
+		<param name="pose" 				value="rifle" />
+	</params>
+	<geometry>
+		<firstperson name="Objects/Weapons/Scar/scar_fp.chr" angles="0,0,0" position="0,0,-.075" />
+		<thirdperson name="Objects/Weapons/Scar/scar_tp.cgf" />
+	</geometry>
+	<actions>
+		<action name="select">
+			<animation target="firstperson" name="select_01" />
+			<animation target="owner" name="select" />
+			<sound target="firstperson" name="sounds/weapons:scar:select_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:scar:select_3p" radius="2" />
+		</action>
+		<action name="idle">
+			<animation target="firstperson" name="idle_%hand%_%suffix%01" speed="0.7"/>
+			<animation target="owner" name="idle" />
+		</action>
+		<action name="deselect">
+			<animation target="firstperson" name="deselect_scar" />
+			<animation target="owner" name="deselect" />
+			<sound target="firstperson" name="sounds/weapons:scar:deselect_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:scar:deselect_3p" radius="2" />
+		</action>
+		<action name="fire">
+			<animation target="firstperson" name="fire_bullets_right_%suffix%01" />
+			<animation target="owner" name="shoot" />
+			<sound target="firstperson" name="sounds/weapons:scar:fire_single_fp" radius="200" static="0" />
+			<sound target="thirdperson" name="sounds/weapons:scar:fire_single_3p" radius="200" static="0" />
+		</action>
+	</actions>
+	<firemodes>
+		<firemode name="Automatic" type="Automatic">
+			<fire>
+			</fire>
+		</firemode>
+		<firemode type="default">
+		</firemode>
+	</firemodes>
+	<zoommodes>
+		<zoommode type="default">
+		</zoommode>
+	</zoommodes>
+	<accessories>
+	</accessories>
+</item>

@@ -1,0 +1,4 @@
+<Entity
+ Name="Flag" 
+ Script="Scripts/Entities/Multiplayer/Flag.lua"
+/>

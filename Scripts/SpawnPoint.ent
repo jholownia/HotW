@@ -1,0 +1,4 @@
+<Entity
+ Name="SpawnPoint" 
+ Script="Scripts/Entities/Multiplayer/SpawnPoint.lua"
+/>

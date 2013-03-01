@@ -1,0 +1,41 @@
+<Signals>
+	<SystemSignals>
+		<Signal name="OnThreateningSeen"/>
+		<Signal name="OnLostSightOfTarget"/>
+		<Signal name="OnCoverReached"/>
+		<Signal name="OnCloseContact"/>
+		<Signal name="OnTPSDestReached"/>
+		<Signal name="OnEnemySeen"/>
+		<Signal name="OnEnemyMemory"/>
+		<Signal name="OnNoTarget"/>
+		<Signal name="OnInterestingSoundHeard"/>
+		<Signal name="OnThreateningSoundHeard"/>
+		<Signal name="OnObjectSeen"/>
+		<Signal name="OnReload"/>
+		<Signal name="OnReloadDone"/>
+		<Signal name="OnHideSpotReached"/>
+		<Signal name="OnNoHidingPlace"/>
+		<Signal name="OnBadHideSpot"/>
+		<Signal name="OnLowHideSpot"/>
+		<Signal name="OnLeftLean"/>
+		<Signal name="OnRightLean"/>
+		<Signal name="OnNoPathFound"/>
+		<Signal name="OnEndPathOffset"/>
+		<Signal name="OnPathFound"/>
+		<Signal name="OnBackOffFailed"/>
+		<Signal name="OnDamage"/>
+		<Signal name="OnEnemyDamage"/>
+		<Signal name="OnBulletRain"/>
+		<Signal name="OnGroupMemberDied"/>
+		<Signal name="OnLeaderDied"/>
+		<Signal name="OnFriendInWay"/>
+		<Signal name="OnSwitchWeaponAccessory"/>
+		<Signal name="OnPlayerLooking"/>
+		<Signal name="OnPlayerLookingAway"/>
+		<Signal name="OnSpawn"/>
+		<Signal name="OnActivate"/>
+		<Signal name="OnGrenadeSeen"/>
+		<Signal name="OnSomethingSeen"/>
+		<Signal name="OnReceivingDamage"/>
+	</SystemSignals>
+</Signals>

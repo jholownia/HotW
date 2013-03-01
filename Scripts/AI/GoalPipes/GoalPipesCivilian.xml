@@ -1,0 +1,8 @@
+<GoalPipes>
+
+	<GoalPipe name="Civilian_HideFromEnemy">
+		<Speed id="Sprint"/>
+		<TacticalPos name="Civilian_HideFromEnemy"/>
+	</GoalPipe>
+
+</GoalPipes>

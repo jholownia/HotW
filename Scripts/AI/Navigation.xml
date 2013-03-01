@@ -1,0 +1,21 @@
+<Navigation version="3" >
+	<AgentTypes>
+    
+    <AgentType name="MediumSizedCharacters" voxelSize="0.125, 0.125, 0.125" radius="4" height="16" climbableHeight="3" maxWaterDepth="8" >
+      <SmartObjectUserClasses>
+        <class name="Human" />
+        <class name="Grunt" />
+      </SmartObjectUserClasses>
+    </AgentType>
+    
+		<AgentType name="LargeSizedCharacters" voxelSize="0.16, 0.16, 0.16" radius="6" height="20" climbableHeight="6" maxWaterDepth="10" >
+      <SmartObjectUserClasses>
+        <class name="LargeCharacterClass" />
+      </SmartObjectUserClasses>
+    </AgentType>
+    
+    <AgentType name="VehicleMedium" voxelSize="0.20, 0.20, 0.20" radius="14" height="10" climbableHeight="4" maxWaterDepth="5" >
+    </AgentType>
+	
+  </AgentTypes>
+</Navigation>

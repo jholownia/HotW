@@ -1,0 +1,19 @@
+<downloadmgr_config>
+	<!-- ps3 needs fully qualified domain name -->
+	<default_resource config="nottingham" port="80" server="nottelemetry01.intern.crytek.de" prefix="~webdata/download/" />
+	<default_resource config="dallas" port="80" server="lb.crysis2.ea.com" prefix="webdata/" />
+	<resources>
+		<!-- rss and tos are a localisable resources -->
+		<!-- %LANGUAGE% is replaced with the contents of the g_langauge cvar -->
+		<resource name="rss" url="rss-%LANGUAGE%.xml" maxSize="4096" />
+		<!-- first line of tos should be VERSION: <versionnum> -->
+		<resource name="mycrysistos" url="mycrysistos-%LANGUAGE%.txt" maxSize="60000" />
+
+		<resource name="playlists" url="playlists.xml" maxSize="4096" />
+		<resource name="variants" url="variants.xml" maxSize="4096" />
+		<resource name="permissions" url="permissions.xml" maxSize="2048" />
+
+    <resource name="datapatch" url="datapatch.szxml" maxSize="20000" />
+    <resource name="anticheatconfig" url="anticheatconfig.szxml" maxSize="20000" />
+  </resources>
+</downloadmgr_config>

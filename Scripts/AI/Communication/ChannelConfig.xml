@@ -1,0 +1,12 @@
+<Communications>
+	<ChannelConfig>
+		<Channel name="Global" minSilence="1.5" flushSilence="0.5" type="global">
+			<Channel name="Group" minSilence="1.5" flushSilence="0.5" type="group">
+				<Channel name="Search" minSilence="6.5" type="group"/>
+				<Channel name="Reaction" priority="2" minSilence="2" flushSilence="0.5" type="group"/>
+				<Channel name="Threat" priority="4" minSilence="0.5" flushSilence="0.5" type="group"/>        
+			</Channel>
+			<Channel name="Personal" priority="1" minSilence="2" actorMinSilence="3" type="personal"/> 
+		</Channel>	
+	</ChannelConfig>
+</Communications>

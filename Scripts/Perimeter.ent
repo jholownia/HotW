@@ -1,0 +1,4 @@
+<Entity
+ Name="Perimeter" 
+ Script="Scripts/Entities/Multiplayer/Perimeter.lua"
+/>

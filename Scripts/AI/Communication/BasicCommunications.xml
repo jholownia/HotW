@@ -1,0 +1,26 @@
+<Communications>
+
+  <!--Animation + Sound Event example (needs state using the action/signal in the animation graph)-->
+  <Config name="Surprise">
+	<Communication name="comm_anim" finishMethod="animation" blocking="all" forceAnimation="1">
+		<Variation animationName="Surprise" soundName="sounds/interface:player:heartbeat" />
+	</Communication>
+  </Config>
+  
+  <!--Sound Event example-->
+  <Config name="Welcome">
+	<Communication name="comm_welcome" finishMethod="sound" blocking="none">
+      <Variation soundName="sounds/dialog:dialog:welcome" />
+    </Communication>    
+  </Config>
+
+  <!--Auto generated Voice Library examples-->
+  <Config name="SDK_Example_NPC_01">
+    <AutoGenerateCommunication voiceLib="npc_01_example" finishMethod="voice" blocking="none" />
+  </Config>
+
+  <Config name="SDK_Example_NPC_02">
+    <AutoGenerateCommunication voiceLib="npc_02_example" finishMethod="voice" blocking="none" />
+  </Config>
+
+</Communications>

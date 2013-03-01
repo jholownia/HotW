@@ -1,0 +1,446 @@
+<!-- Basic weapon script: "SCAR" -->
+<!-- This script sample demostrates how to create a basic weapon which can fire single shots, reload and zoom in/out -->
+
+<!-- GENERAL IDEAS/CONCEPTS: -->
+<!-- 1) These scripts can be seen like kind of a database, that stores certain information and parameters. -->
+<!--	According to the data decription provided within these files, the system will instantiate some C++ objects -->
+<!--	and will fill some member data structures (FX, sound, animations, recoil parameters...)-->
+ 
+<!-- 2) The first line of the script <item ...> contains the name of our item (unique), and its class. There are several classes supported: -->
+<!--	Item, Weapon, VehicleWeapon, GunTurret, LAM ... all of them registed in GameDLL, GameFactory.cpp. -->
+<!--	We can add new C++ derived classes from IItem interface and register them to create some new weapon, items, accessories, ... -->
+
+<!-- 3) Derivated classes inherit all the params from parent classes. -->
+<!--	Some common data blocks like <geometry>, or <params> are defined in the base class Item; while derivated classes-->
+<!--	like Weapon can add new blocks, e.g. <ammos> -->
+
+<!-- 4) Items support accessories, that can be attached to them. See <accessories> block covered in this example -->
+
+<!-- 5) Weapons: Fire modes and zoom modes -->
+<!--	Fire modes: A weapon can have one or more of these ones. For every entry in the script, the weapon will instantiate a C++ object for that firemode-->
+<!--	Supported fire mode types are registered in WeaponSystem.cpp. Types as Single, Automatic, Rapid, Burst... are available. -->
+<!--	If you need a new one, you can create a new class which implements IFireMode interface, and register it in the weapon sytem -->
+<!--	Zoom modes: Similar to fire modes, but in this case they need to implement IZoomMode interface. Ironsight and Scope are supported at the moment -->
+
+
+<!-- The first line is where we give our item a name, and specifies its class, Weapon -->
+<!-- Other params like category or priority in this case, although not needed, are for inventory management -->
+<item name="SCAR" class="Weapon" category="medium" priority="12">
+
+	<!-- Params block: Define some common item parameters -->
+	<!-- Here we list some of them, there are many others. When a value is not initialized here, it will get internally a default value --> 
+	<params>
+		<param name="giveable" value="1" />
+		<param name="selectable" value="1" />
+		<param name="pose" value="rifle" /> <!-- Pose of the owner character of the weapon when using this weapon. -->
+		<param name="mass" value="20" /> <!-- Used e.g. to adjust movement speed of the player when using it -->
+		<param name="attach_to_back" value="1" />
+		<param name="bone_attachment_01" value="back_item_attachment_01" />
+		<param name="bone_attachment_02" value="back_item_attachment_02" />
+	</params>
+
+	<!-- Ammo block -->
+	<!-- A weapon can support one or more types of ammo. For every ammo type, we add a <ammo ... /> line -->
+	<!-- We have to specify at least the ammo name (must be a registered projectile in the weapon system), other values, like extra or amount  -->
+	<!-- indicates that the weapon will give the player some extra ammo when picked up, or that it will have 40 bullets already in the clip (amount) -->
+	<ammos>
+		<ammo name="bullet" extra="0" amount="40" capacity="200"/>
+	</ammos>
+
+	<!-- Geometry block -->
+	<!-- An item is an entity, and entities give as several slots to store among other things our weapon models -->
+	<!-- The most common used slots are firstperson and thirdperson, although there are others and we can add new ones. -->
+	<!-- (See Item.h, eGeometrySlot. And ItemParams.cpp, CItem::TargetToSlot(const char *slot)) -->
+	<geometry>
+		<!-- In this case we load our animated first person weapon in the firstperson slot -->
+		<!-- and an static mesh in the thirdperson one (for third person view, or pickups) -->
+		<firstperson name="Objects/Weapons/Scar/scar_fp.chr"/>
+		<thirdperson name="Objects/Weapons/Scar/scar_tp.cgf"/>
+		<!-- In this sub-block of geometry, we can define attachment points in some of our character bones -->
+		<!-- These attachments can be referenced within this very same script to attach accessories, particle fx... -->
+		<boneAttachments>
+			<attachment target="firstperson" name="magazine" bone="magazine" />
+			<attachment target="firstperson" name="silencer_attach" bone="weapon_term" />
+			<attachment target="firstperson" name="muzzle_flash_effect" bone="weapon_term" />
+			<attachment target="firstperson" name="muzzle_flash_light" bone="weapon_term" />
+			<attachment target="firstperson" name="muzzle_flash_smoke" bone="weapon_term" />
+		</boneAttachments>
+	</geometry>
+
+	<!-- Actions block: -->
+	<!-- An item action consists usually in playing an animation and a sound -->
+	<!-- 1) Action name: Several dozens of actions are already supported (select, idle, fire,...). -->
+	<!--	We can create new functionality in C++, give it an action name and add it here. -->
+	<!-- 2) Animations: They can have firstperson as a target, and we have to provide an animation name listed in the .caf file of the weapon -->
+	<!--	If the target is the "owner", the name will be used like some kind of high level command (together with the item pose described in params) -->
+	<!--	for the animation graph of the owner character of the weapon -->
+	<!-- 3) Sounds: Just specify your target thirdperson/firstperson and a sound name -->
+
+	<!-- NOTE: We can add several first person animations to an action, and the system will select one randomly when playing the action -->
+	<actions>
+		<action name="select">
+			<animation target="firstperson" name="select_01" />
+			<animation target="owner" name="select" />
+			<sound target="firstperson" name="sounds/weapons:scar:select_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:scar:select_3p" radius="2" />
+		</action>
+		<action name="idle">
+			<animation target="firstperson" name="idle_%hand%_%suffix%01" speed="0.7"/>
+			<animation target="owner" name="idle" />
+		</action>
+		<action name="deselect">
+			<animation target="firstperson" name="deselect_scar" />
+			<animation target="owner" name="deselect" />
+			<sound target="firstperson" name="sounds/weapons:scar:deselect_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:scar:deselect_3p" radius="2" />
+		</action>
+		<action name="pickedup">
+			<sound target="firstperson" name="Sounds/weapons:weapon_accessories:pickup_weapon_fp" radius="5" />
+			<sound target="thirdperson" name="Sounds/weapons:weapon_accessories:pickup_weapon_3p" radius="5" />
+		</action>
+		<action name="offhand_on">
+			<animation target="firstperson" name="remove_arm_left" speed="2.5"/>
+		</action>
+		<action name="offhand_off">
+			<animation target="firstperson" name="replace_arm_left" />
+		</action>
+
+		<!-- What is %suffix% -->
+		<!-- They work as string variables, that will be replaced within the system. For example %suffix%: -->
+		<!-- It will have an internal value e.g. "ironsight_" (see zoommodes block bellow. -->
+		<!-- When performing the action "fire", %suffix% will be replaced for its string value, giving us the chance to play -->
+		<!-- different animations with a single action, if the animation names follow a naming convention. -->
+		<!-- In this case fire and fire in ironsight mode -->
+		<action name="fire">
+			<animation target="firstperson" name="fire_bullets_right_%suffix%01" />
+			<animation target="owner" name="shoot" />
+			<sound target="firstperson" name="sounds/weapons:scar:fire_single_fp" radius="200" static="0" />
+			<sound target="thirdperson" name="sounds/weapons:scar:fire_single_3p" radius="200" static="0" />
+		</action>
+		<action name="rapid_fire">
+			<sound target="firstperson" name="Sounds/weapons:scar:fire_loop_fp" radius="200" static="1" synched="1"/>
+			<sound target="thirdperson" name="Sounds/weapons:scar:fire_loop_3p" radius="200" static="1" synched="1"/>
+		</action>
+		<action name="spin_down">
+			<sound target="firstperson" name="Sounds/weapons:scar:fire_tail_fp" radius="200" static="0" synched="1"/>
+			<sound target="thirdperson" name="Sounds/weapons:scar:fire_tail_3p" radius="200" static="0" synched="1"/>
+		</action>
+		<action name="enter_modify">
+			<animation target="firstperson" name="enter_modify_%hand%_01" />
+			<animation target="ownerloop" name="modify_weapon" />
+		</action>
+		<action name="leave_modify">
+			<animation target="firstperson" name="leave_modify_%hand%_01" />
+			<animation target="ownerloop" name="idle" />
+		</action>
+
+		<!-- FIREMODE NOT SUPPORTED IN CURRENT SETTING
+		<action name="fire_silenced">
+			<animation target="firstperson" name="fire_bullets_%hand%_%suffix%01" />
+			<animation target="owner" name="shoot" />
+			<sound target="firstperson" name="sounds/weapons:scar:fire_silenced_fp_single" radius="18" static="1" />
+			<sound target="thirdperson" name="sounds/weapons:scar:fire_silenced_3rd_single" radius="18" static="1" />
+		</action> -->
+
+		<action name="reload_chamber_empty">
+			<animation target="firstperson" name="reload_01" />
+			<animation target="owner" name="reload_chamber_empty" />
+		</action>
+		<action name="reload_chamber_full">
+			<animation target="firstperson" name="reload_01" />
+			<animation target="owner" name="reload_chamber_full" />
+		</action>
+		<action name="empty_clip">
+			<sound target="firstperson" name="Sounds/weapons:scar:dryfire_fp" radius="2" />
+			<sound target="thirdperson" name="Sounds/weapons:scar:dryfire_3p" radius="2" />
+		</action>
+		<action name="zoom_in">
+			<animation target="firstperson" name="zoom_in_%suffix%01" speed="2.0" /> <!-- We can override the animation speed, making it twice as fast -->
+		</action>
+		<action name="zoom_out">
+			<animation target="firstperson" name="zoom_out_%suffix%01" speed="2.0" />
+		</action>
+		<action name="change_firemode">
+			<animation target="firstperson" name="change_firemode" />
+			<sound target="firstperson" name="sounds/weapons:weapon_accessories:change_firemode_fp" radius="5" />
+			<sound target="thirdperson" name="sounds/weapons:weapon_accessories:change_firemode_3p" radius="5" />
+		</action>
+	</actions>
+
+	<!-- The animation system also support layers. Activating then, the hierarchy of the weapon character can be partially "overwritten" -->
+	<!-- They are used mainly for accessories, or some weapon states like a pistol empty of ammo with the top slider moved backwards -->
+	<layers>
+		<layer name="silencer">
+			<animation target="firstperson" name="silencer_on_layer_01" layerId="1" />
+		</layer>
+	</layers>
+
+	<!-- Fire modes: -->
+	<!--	One or more fire modes are supported. For each one we create a block <firemode>. -->
+	<!--	In order to prevent redundancy, we can create a firemode of type "default". -->
+	<!--	In this case probably is not needed, but imagine a semi-automatic weapon which can shoot single shots or fully automatic. -->
+	<!--	You could add your common params, like ammo_type, damage, reload_time... inside the default block. -->
+	<!--	Then you create 2 firemodes, Single and Automatic which can overwrite some of this params -->
+
+	<!--	In our example weapon, I add several blocks of params to the default section. Then I create a firemode of type single -->
+	<!--	that will inherit all the default values, overwrite some of them, and add new ones like the tracers -->
+
+	<!--	As explained before, this data will fill some C++ member structures, within the fire mode object -->
+	<!--	The amount and variety of info that could be added here, it's out of the scope of this example. -->
+	<!--	For more details go to the Fire Modes source code folder inside GameDLL, and take a look at the code -->
+	<firemodes>
+		<firemode type="default">
+			<!-- Some common fire params: ammo type, fire rate, damage of the ammo -->
+			<fire>
+				<param name="ammo_type" value="bullet" />
+				<param name="rate" value="700" />
+				<param name="damage" value="75" />
+				<param name="reload_time" value="2.75" />
+				<param name="bullet_chamber" value="1" />
+				<param name="clip_size" value="40" />
+				<param name="helper_tp" value="weapon_term" />
+				<param name="nearmiss_signal" value="OnNearMiss" />
+				<param name="muzzleFromFiringLocator" value="1"/>
+			</fire>
+			<!-- Some params to tweak the recoil of the weapon. (See CSingle::UpdateRecoil() to see how it works!! -->
+			<recoil>
+				<param name="max_recoil" value="4" />
+				<param name="attack" value="0.4" />
+				<param name="decay" value="1.25" />
+				<param name="maxx" value="30" />
+				<param name="maxy" value="0" />
+				<param name="randomness" value="0.0" />
+				<hints>
+					<hint x="0.02"	y="0.00" />
+					<hint x="0.02"	y="0.00" />
+					<hint x="0.10"	y="0.00" />
+					<hint x="0.28"	y="0.00" />
+					<hint x="0.35"	y="0.00" />
+					<hint x="0.43"	y="0.00" />
+					<hint x="0.50"	y="0.00" />
+					<hint x="0.50"	y="0.00" />
+					<hint x="0.50"	y="0.00" />
+					<hint x="0.50"	y="0.00" />
+				</hints>
+			</recoil>
+			<!-- If you don't want your gun to be ping-pong accurate, and make head-shots a bit harder, this will add some spread on top of your shots -->
+			<spread>
+				<param name="min" value="1.5" />
+				<param name="max" value="3.0" />
+				<param name="attack" value="0.8" />
+				<param name="decay" value="0.5" />
+				<param name="speed_m" value="1.5" />
+			</spread>
+			<!-- We can also add some muzzleflashes and light FX when firing... -->
+			<muzzleflash>
+				<firstperson effect="weapon_fx.scar.muzzle_flash.muzzle_flash_fp" helper="muzzle_flash_effect" light_helper="muzzle_flash_light" light_radius="2" light_time="0.01" light_color="1,0.5,0.25" light_diffuse_mult="2" />
+				<thirdperson effect="weapon_fx.scar.muzzle_flash.muzzle_flash_tp" helper="weapon_term" light_helper="weapon_term" light_radius="2.5" light_time="0.01" light_color="1,0.5,0.25" light_diffuse_mult="2" />
+			</muzzleflash>
+			<!-- or even reject some shells when firing. Take a look at the use of the attachments/helpers that we defined before -->
+			<reject>
+				<firstperson effect="weapon_fx.scar.shell_eject_fp" helper="shells" />
+				<thirdperson effect="weapon_fx.scar.shell_eject_tp" helper="shells" />
+			</reject>
+		</firemode>
+		<firemode name="Rapid" type="Rapid">
+			<tracer>
+				<param name="geometryFP" value="objects/effects/tracer_standard_new.cgf" />
+				<param name="geometry" value="objects/effects/tracer_standard_new.cgf" />
+				<param name="effectFP" value="weapon_fx.scar.tracer.tracer_fp" />
+				<param name="effect" value="weapon_fx.scar.tracer.tracer_tp" />
+				<param name="speed" value="400" />
+				<param name="speedFP" value="450" />
+				<param name="frequency" value="1" />
+				<param name="helper_fp" value="weapon_term" />
+				<param name="helper_tp" value="weapon_term" />
+			</tracer>
+			<outofammotracer>
+				<param name="geometryFP" value="objects/effects/tracer_standard_red_new.cgf" />
+				<param name="geometry" value="objects/effects/tracer_standard_red_new.cgf" />
+				<param name="effectFP" value="weapon_fx.scar.tracer.tracer_fp" />
+				<param name="effect" value="weapon_fx.scar.tracer.tracer_tp" />
+				<param name="speed" value="400" />
+				<param name="speedFP" value="450" />
+				<param name="frequency" value="1" />
+				<param name="helper_fp" value="weapon_term" />
+				<param name="helper_tp" value="weapon_term" />
+			</outofammotracer>
+			<fire>
+				<param name="autozoom" value="1"/>
+				<param name="ooatracer_treshold" value="5" />
+			</fire>
+			<rapid>
+				<param name="min_speed" value="0.001" />
+				<param name="max_speed" value="0.001" />
+				<param name="acceleration" value="2.35" />
+				<param name="deceleration" value="-3.0" />
+			</rapid>
+			<recoil>
+				<param name="angular_impulse" value="0.3" />
+				<param name="back_impulse" value="0.3" />
+			</recoil>
+			<muzzlesmoke>
+				<firstperson effect="weapon_fx.scar.gun_smoke_fp" helper="muzzle_flash_smoke" />
+				<thirdperson effect="weapon_fx.scar.gun_smoke_tp" helper="weapon_term" />
+			</muzzlesmoke>
+		</firemode>
+		<!-- Here we define the only fire mode that the weapon has, Single. (name and type don't have to be the same) -->
+		<firemode name="Single" type="Single">
+			<!-- We add some tracer effects -->
+			<tracer>
+				<param name="geometryFP" value="objects/effects/tracer_standard_new.cgf" />
+				<param name="geometry" value="objects/effects/tracer_standard_new.cgf" />
+				<param name="effectFP" value="weapon_fx.scar.tracer.tracer_fp" />
+				<param name="effect" value="weapon_fx.scar.tracer.tracer_tp" />
+				<param name="speed" value="400" />
+				<param name="speedFP" value="450" />
+				<param name="frequency" value="1" />
+				<param name="helper_fp" value="weapon_term" />
+				<param name="helper_tp" value="weapon_term" />
+			</tracer>
+			<outofammotracer>
+				<param name="geometryFP" value="objects/effects/tracer_standard_red_new.cgf" />
+				<param name="geometry" value="objects/effects/tracer_standard_red_new.cgf" />
+				<param name="effectFP" value="weapon_fx.scar.tracer.tracer_fp" />
+				<param name="effect" value="weapon_fx.scar.tracer.tracer_tp" />
+				<param name="speed" value="400" />
+				<param name="speedFP" value="450" />
+				<param name="frequency" value="1" />
+				<param name="helper_fp" value="weapon_term" />
+				<param name="helper_tp" value="weapon_term" />
+			</outofammotracer>
+			<!-- Add we add some fire and recoil params in top of the default ones -->
+			<fire>
+				<param name="tracer_treshold" value="5" />
+				<param name="auto_fire" value="true" />
+			</fire>
+			<recoil>
+				<param name="angular_impulse" value="0.3" />
+				<param name="back_impulse" value="0.3" />
+			</recoil>
+			<muzzleflash>
+				<firstperson effect="weapon_fx.scar.muzzle_flash.muzzle_flash_fp" helper="muzzle_flash_effect" light_helper="muzzle_flash_light" light_radius="2" light_time="0.033" light_color="1,0.5,0.25" light_diffuse_mult="2" />
+				<thirdperson effect="weapon_fx.scar.muzzle_flash.muzzle_flash_tp" helper="weapon_term" light_helper="weapon_term" light_radius="2.5" light_time="0.033" light_color="1,0.5,0.25" light_diffuse_mult="2" />
+			</muzzleflash>
+		</firemode>
+		<firemode name="Burst" type="Burst">
+			<tracer>
+				<param name="geometryFP" value="objects/effects/tracer_standard_new.cgf" />
+				<param name="geometry" value="objects/effects/tracer_standard_new.cgf" />
+				<param name="effectFP" value="weapon_fx.scar.tracer.tracer_fp" />
+				<param name="effect" value="weapon_fx.scar.tracer.tracer_tp" />
+				<param name="speed" value="400" />
+				<param name="speedFP" value="450" />
+				<param name="frequency" value="1" />
+				<param name="helper_fp" value="weapon_term" />
+				<param name="helper_tp" value="weapon_term" />
+			</tracer>
+			<outofammotracer>
+				<param name="geometryFP" value="objects/effects/tracer_standard_red_new.cgf" />
+				<param name="geometry" value="objects/effects/tracer_standard_red_new.cgf" />
+				<param name="effectFP" value="weapon_fx.scar.tracer.tracer_fp" />
+				<param name="effect" value="weapon_fx.scar.tracer.tracer_tp" />
+				<param name="speed" value="400" />
+				<param name="speedFP" value="450" />
+				<param name="frequency" value="1" />
+				<param name="helper_fp" value="weapon_term" />
+				<param name="helper_tp" value="weapon_term" />
+			</outofammotracer>
+			<fire>
+				<param name="tracer_treshold" value="5" />
+				<param name="auto_fire" value="true" />
+			</fire>
+			<burst>
+				<param name="rate" value="700"/>
+			</burst>
+			<recoil>
+				<param name="angular_impulse" value="0.3" />
+				<param name="back_impulse" value="0.3" />
+			</recoil>
+			<muzzlesmoke>
+				<firstperson effect="weapon_fx.scar.gun_smoke_fp" helper="muzzle_flash_smoke" />
+				<thirdperson effect="weapon_fx.scar.gun_smoke_tp" helper="weapon_term" />
+			</muzzlesmoke>
+		</firemode>
+	</firemodes>
+
+	<!-- Zoom modes: -->
+	<!-- As you can see, the structure is pretty similar to the fire mode ones. If you don't need zoom modes, skip this section. -->
+	<zoommodes>
+		<zoommode name="ironsight" type="IronSight">
+			<zoom>
+				<param name="suffix" value="ironsight_" /> <!-- Remember that %suffix% that you saw in the <actions> block ...-->
+				<param name="dof_mask" value="textures/weapons/ironzoom_blurmask.dds" />
+				<param name="zoom_in_time" value="0.2" />
+				<param name="zoom_out_time" value="0.2" />
+				<stages>
+					<stage value="1.4" />
+				</stages>
+			</zoom>
+			<!-- Adding some zoom sway to the zoom mode. -->
+			<zoomSway>
+				<param name="maxX" value="0.012" />
+				<param name="maxY" value="0.015" />
+				<param name="stabilizeTime" value="1.5"/>
+				<param name="minScale" value="0.25"/>
+				<param name="strengthScale" value="0.75"/>
+				<param name="strengthScaleTime" value="0.75"/>
+				<param name="crouchScale" value="0.75"/> <!-- We can scale it for different stances, reducing it while crouch or prone -->
+				<param name="proneScale" value="0.5"/>
+			</zoomSway>
+			<!-- This params modify the spread and recoil of the weapon, making it more accurate when you are zoomed -->
+			<spreadMod>
+				<param name="max_mod" value="0.1"/>
+				<param name="attack_mod" value="1.0"/>
+				<param name="decay_mod" value="1.0"/>
+				<param name="speed_m_mod" value="1.0" />
+				<param name="min_mod" value="0.0001"/>
+				<param name="rotation_m_mod" value="1.5"/>
+				<param name="spread_crouch_m_mod" value="0.75"/>
+				<param name="spread_prone_m_mod" value="0.5"/>
+				<param name="spread_jump_m_mod" value="1.0"/>
+			</spreadMod>
+			<recoilMod>
+				<param name="max_recoil_mod" value="0.5" />
+				<param name="attack_mod" value="0.5" />
+				<param name="decay_mod" value="0.8" />
+				<param name="impulse_mod" value="1.0" />
+				<param name="maxx_mod" value="0.75" />
+				<param name="maxy_mod" value="0.75" />
+				<param name="angular_impulse_mod" value="1.0" />
+				<param name="back_impulse_mod" value="1.0" />
+				<param name="recoil_crouch_m_mod" value="0.75" />
+				<param name="recoil_prone_m_mod" value="0.5" />
+				<param name="recoil_jump_m_mod" value="2.0" />
+				<param name="recoil_strMode_m_mod" value="2.0" />
+			</recoilMod>
+		</zoommode>
+	</zoommodes>
+	
+	<!-- Accessories -->
+	<!-- An accessory must be another item registered in the system. -->
+	<accessories>
+		<accessory name="Silencer">
+			<attach helper="silencer_attach" layer="silencer" />
+			<detach />
+			<params>
+				<firemodes>
+					<firemode type="default">
+						<fire>
+							<param name="damage_drop_per_meter" value="1.5" />
+							<param name="damage_drop_min_distance" value="10" />
+						</fire>
+						<muzzleflash>
+							<firstperson effect="weapon_fx.scar.muzzle_flash.muzzle_flash_silenced_fp" helper="muzzle_flash_effect" time="0.1" />
+							<thirdperson effect="weapon_fx.scar.muzzle_flash.muzzle_flash_silenced_tp" helper="weapon_term" time="0.1" />
+						</muzzleflash>
+						<actions>
+							<param name="fire" value="fire_silenced" />
+							<param name="rapid_fire" value="rapid_fire_silenced" />
+						</actions>
+					</firemode>
+				</firemodes>
+			</params>
+		</accessory>
+	</accessories>
+</item>

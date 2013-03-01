@@ -1,0 +1,163 @@
+<item name="Fists" class="Fists" category="small" priority="1" invisible="1" >
+	<params>
+		<param name="giveable" value="1" />
+		<param name="selectable" value="1" />
+		<param name="droppable" value="0" />
+		<param name="pose" value="nw" />
+		<param name="mass" value="1" />
+		<param name="melee_attack_firemode"	value="melee" />
+		<dualwield>
+			<suffix value="akimbo_" />
+		</dualwield>
+	</params>
+	<geometry>
+		<firstperson name="objects/weapons/us/nw/nw_arms_fp.chr" angles="0,0,0" />
+	</geometry>
+
+	<actions>
+		<action name="select">
+			<animation target="firstperson" name="nw_arms_select" />
+			<animation target="owner" name="select_fist" />
+			<sound target="firstperson" name="sounds/weapons:punch:select_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:punch:select_3p" radius="2" />
+		</action>
+		<action name="deselect">
+			<animation target="firstperson" name="nw_arms_deselect" blendTime="0.5" />
+			<animation target="owner" name="deselect" />
+			<sound target="firstperson" name="sounds/weapons:punch:deselect_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:punch:deselect_3p" radius="2" />
+		</action>
+		<action name="idle">
+			<animation target="firstperson" name="nw_arms_idle" />
+			<animation target="owner" name="melee_idle" />
+		</action>
+		<action name="punch">
+			<animation target="firstperson" name="nw_arms_push" camera_helper="camera_helper" />
+			<animation target="owner" name="melee_punch_right" />
+			<animation target="firstperson" name="nw_arms_push" camera_helper="camera_helper" />
+			<animation target="owner" name="melee_punch_swing_left" />
+			<sound target="firstperson" name="sounds/weapons:punch:fire_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:punch:fire_3p" radius="2" />
+		</action>
+		<action name="melee">
+			<animation target="firstperson" name="nw_arms_push" camera_helper="camera_helper" />
+			<animation target="owner" name="melee_punch_swing_left" />
+			<animation target="firstperson" name="nw_arms_push" camera_helper="camera_helper" />
+			<animation target="owner" name="melee_punch_right" />
+			<sound target="firstperson" name="sounds/weapons:punch:fire_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:punch:fire_3p" radius="2" />
+		</action>
+		<action name="hit">
+			<sound target="firstperson" name="sounds/physics:bullets/impacts:melee_impact" radius="5" />
+			<sound target="thirdperson" name="sounds/physics:bullets/impacts:melee_impact" radius="5" />
+		</action>
+		<action name="pickup_beam">
+			<animation target="firstperson" name="" />
+			<animation target="owner" name="punch" />
+		</action>
+		<action name="idle_beam">
+			<animation target="firstperson" name="" />
+			<animation target="owner" name="punch" />
+		</action>
+		<action name="throw_beam">
+			<animation target="firstperson" name="" />
+			<animation target="owner" name="punch" />
+		</action>
+		<action name="offhand_on">
+			<animation target="firstperson" name="nw_arms_idle_right_akimbo_01" speed="1" /> 
+		</action>
+		<action name="offhand_off">
+			<animation target="firstperson" name="" />
+		</action>
+		<action name="offhand_on_akimbo">
+			<animation target="firstperson" name="nw_arms_idle_relaxed" speed="1" />
+		</action>
+		<action name="offhand_off_akimbo">
+			<animation target="firstperson" name="nw_arms_idle_relaxed" />
+		</action>
+		<action name="swim_forward_underwater">
+			<animation target="firstperson" name="" blendTime=".5"/>
+		</action>
+		<action name="swim_forward">
+			<animation target="firstperson" name="nw_swim_forward" blendTime=".5"  />
+		</action>
+		<action name="speed_swim">
+			<animation target="firstperson" name="" blendTime=".5"/>
+		</action>
+		<action name="swim_backward">
+			<animation target="firstperson" name="" blendTime=".5"/>
+		</action>
+		<action name="swim_idle">
+			<animation target="firstperson" name="" blendTime=".5" />
+		</action>
+		<action name="swim_idle_underwater">
+			<animation target="firstperson" name="" blendTime=".5"/>
+		</action>
+		<action name="freefall_idle">
+			<animation target="firstperson" name="" blendTime=".5" />
+		</action>
+		<action name="freefall_start">
+			<animation target="firstperson" name="" blendTime=".5" />
+		</action>
+		<action name="parachute_idle">
+			<animation target="firstperson" name="" blendTime=".5" />
+		</action>
+		<action name="parachute_start">
+			<animation target="firstperson" name="" blendTime=".5" />
+		</action>
+		<action name="run_forward">
+			<animation target="firstperson" name="" />
+		</action>
+		<action name="crawl">
+			<animation target="firstperson" name=""/>
+		</action>
+		<action name="jump">
+			<animation target="firstperson" name="" camera_helper="camera_helper"/>
+		</action>
+		<action name="jump_start">
+			<animation target="firstperson" name="" camera_helper="camera_helper"/>
+		</action>
+		<action name="jump_idle">
+			<animation target="firstperson" name="" camera_helper="camera_helper"/>
+		</action>
+		<action name="jump_end">
+			<animation target="firstperson" name="" speed="2.0" camera_helper="camera_helper"/>
+		</action>
+		<action name="idle_relaxed">
+			<animation target="firstperson" name="nw_arms_idle_relaxed" speed="0.5" />
+		</action>
+		<action name="raise">
+			<animation target="firstperson" name="" speed="1.0" camera_helper="camera_helper" />
+		</action>
+
+	</actions>
+	<firemodes>
+		<firemode name="Punch" type="Melee">
+			<melee>
+				<param name="helper" value="Collision" />
+				<param name="damage" value="80" />
+				<param name="impulse" value="100" />
+				<param name="delay" value="0.5" />
+				<param name="duration" value="0.1" />
+			</melee>
+			<actions>
+				<param name="attack" value="punch" />
+			</actions>
+		</firemode>
+		<firemode name="melee" type="Melee">
+			<melee>
+				<param name="helper" value="collision" />
+				<param name="damage" value="60" />
+				<param name="impulse" value="50" />
+				<param name="delay" value="0.25" />
+				<param name="duration" value="0.85" />
+			</melee>
+			<actions>
+				<param name="attack" value="melee" />
+			</actions>
+		</firemode>
+	</firemodes>
+
+	<zoommodes>
+	</zoommodes>
+</item>

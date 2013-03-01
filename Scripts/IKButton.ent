@@ -1,0 +1,4 @@
+<Entity
+ Name="IKButton"
+ Script="Scripts/Entities/IKObjects/IKButton.lua" 
+/>

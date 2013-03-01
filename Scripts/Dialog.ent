@@ -1,0 +1,4 @@
+<Entity
+ Name="Dialog"
+ Script="Scripts/Entities/Sound/Dialog.lua"
+/>

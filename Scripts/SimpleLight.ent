@@ -1,0 +1,6 @@
+<!-- OBSOLETE ENTITY -->
+<Entity
+ Name="SimpleLight" 
+ Script="Scripts/Entities/Lights/SimpleLight.lua"
+ Invisible="1"
+/>

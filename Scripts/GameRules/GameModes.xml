@@ -1,0 +1,8 @@
+<Modes>
+	<GameMode name="DeathMatch">
+		<Alias name="dm"></Alias>
+	</GameMode>
+	<GameMode name="SinglePlayer">
+		<Alias name="sp"></Alias>
+	</GameMode>
+</Modes>

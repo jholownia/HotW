@@ -1,0 +1,4 @@
+<Entity
+ Name="Objective" 
+ Script="Scripts/Entities/Multiplayer/Objective.lua"
+/>

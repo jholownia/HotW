@@ -1,0 +1,70 @@
+<VehicleDamagesTemplates name="DefaultVehicleDamages">
+	<DamagesGroups>
+		<DamagesGroup name="VehicleDestroy">
+			<DamagesSubGroups>
+				<DamagesSubGroup delay="0" randomness="0.5">
+					<DamageBehaviors>
+						<DamageBehavior class="Destroy" />
+						<DamageBehavior class="Effect" >
+							<Effect effect="VehicleDestroyed" />
+						</DamageBehavior>
+						<DamageBehavior class="SpawnDebris"/>
+					</DamageBehaviors>
+				</DamagesSubGroup>
+			</DamagesSubGroups>
+		</DamagesGroup>
+		<DamagesGroup name="CarDestroy" useTemplate="VehicleDestroy">
+			<DamagesSubGroups>
+				<DamagesSubGroup delay="0.2" randomness="0">
+					<DamageBehaviors>
+						<DamageBehavior class="Explosion" >
+							<Explosion damage="150" helper="vehicleBurnPos" pressure="3000" radius="10" minRadius="5" physRadius="10" minPhysRadius="5" />
+						</DamageBehavior>
+					</DamageBehaviors>
+				</DamagesSubGroup>
+				<DamagesSubGroup delay="0.2" randomness="1">
+					<DamageBehaviors>
+						<DamageBehavior class="Burn" >
+							<Burn damage="2" helper="vehicleBurnPos" interval="0.5" radius="3" selfDamage="0.0" />
+						</DamageBehavior>
+					</DamageBehaviors>
+				</DamagesSubGroup>
+			</DamagesSubGroups>
+		</DamagesGroup>
+		<DamagesGroup name="TankDestroy" useTemplate="VehicleDestroy">
+			<DamagesSubGroups>
+				<DamagesSubGroup delay="0.2" randomness="1">
+					<DamageBehaviors>
+						<DamageBehavior class="Explosion">
+							<Explosion damage="150" helper="vehicleBurnPos" pressure="4000" radius="15" minRadius="7.5" physRadius="15" minPhysRadius="7.5" />
+						</DamageBehavior>
+					</DamageBehaviors>
+				</DamagesSubGroup>
+				<DamagesSubGroup delay="0.2" randomness="1">
+					<DamageBehaviors>
+						<DamageBehavior class="Burn" >
+							<Burn damage="2" helper="vehicleBurnPos" interval="0.5" radius="4" selfDamage="0.0" />
+						</DamageBehavior>
+					</DamageBehaviors>
+				</DamagesSubGroup>
+			</DamagesSubGroups>
+		</DamagesGroup>
+		<DamagesGroup name="BoatDestroy" useTemplate="VehicleDestroy">
+			<DamagesSubGroups>
+				<DamagesSubGroup delay="0.2" randomness="1">
+					<DamageBehaviors>
+						<DamageBehavior class="Explosion" >
+							<Explosion damage="150" helper="vehicleBurnPos" pressure="200" radius="10" minRadius="5" physRadius="3" minPhysRadius="2.2" />
+						</DamageBehavior>
+						<DamageBehavior class="Sink" damageRatioMin="1"/>
+					</DamageBehaviors>
+				</DamagesSubGroup>
+				<DamagesSubGroup delay="0.2" randomness="0">
+					<DamageBehaviors>
+						<DamageBehavior class="Sink" damageRatioMin="1"/>
+					</DamageBehaviors>
+				</DamagesSubGroup>
+			</DamagesSubGroups>
+		</DamagesGroup>
+	</DamagesGroups>
+</VehicleDamagesTemplates>

@@ -1,0 +1,11 @@
+<SelectionTrees>
+
+	<SelectionTree name="Racer" type="BehaviorSelectionTree">
+
+		<Priority name="Root">
+			<Leaf name="RacerIdle"/>
+		</Priority>
+
+	</SelectionTree>
+
+</SelectionTrees>

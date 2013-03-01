@@ -1,0 +1,16 @@
+<SelectionTrees>
+
+	<SelectionTree name="Civilian" type="BehaviorSelectionTree">
+
+		<Variables>
+			<Variable name="alerted"/>
+		</Variables>
+
+		<Priority name="Root">
+			<Leaf name="CivilianAlerted" condition="alerted"/>
+			<Leaf name="CivilianIdle"/>
+		</Priority>
+
+	</SelectionTree>
+
+</SelectionTrees>

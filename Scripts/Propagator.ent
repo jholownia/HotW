@@ -1,0 +1,4 @@
+<Entity
+	Name="Propagator"
+	Script="Scripts/Entities/Fires/Propagator.lua"
+/>

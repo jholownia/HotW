@@ -1,0 +1,30 @@
+<protect>
+	<add level="1" file="%GAME_FOLDER%/LowSpec/LowSpec.pak"/>
+	<add level="1" file="%GAME_FOLDER%/Animations.pak"/>
+	<add level="1" file="%GAME_FOLDER%/GameData.pak"/>
+	<add level="1" file="%GAME_FOLDER%/Music.pak"/>
+	<add level="1" file="%GAME_FOLDER%/Objects.pak"/>
+	<add level="1" file="%GAME_FOLDER%/ShaderCache.pak"/>
+	<add level="1" file="%GAME_FOLDER%/Shaders.pak"/>
+	<add level="1" file="%GAME_FOLDER%/Sounds.pak"/>
+	<add level="1" file="%GAME_FOLDER%/Textures.pak"/>
+	<add level="3" folder="Bin32" recurse="1"/>
+	<add level="3" folder="Bin64" recurse="1"/>
+	<add level="1" folder="%GAME_FOLDER%/Scripts" recurse="1"/>
+	<add level="1" folder="%GAME_FOLDER%/config" recurse="1"/>
+	<add level="1" folder="%GAME_FOLDER%/Entities" recurse="1"/>
+	<add level="1" folder="%GAME_FOLDER%/Levels/Multiplayer" recurse="1"/>
+	<add level="1" folder="%GAME_FOLDER%/Libs" recurse="1"/>
+	<add level="2" folder="%GAME_FOLDER%/Shaders" recurse="1"/>
+	<add level="2" folder="%GAME_FOLDER%/Textures" recurse="1"/>
+	<add level="3" folder="%GAME_FOLDER%/Objects" recurse="1"/>
+	<add level="2" folder="%GAME_FOLDER%/Animations" recurse="1"/>
+	<add level="3" folder="%GAME_FOLDER%/Fonts" recurse="1"/>
+	<add level="3" folder="%GAME_FOLDER%/Materials" recurse="1"/>
+	<add level="3" folder="%GAME_FOLDER%/Music" recurse="1"/>
+	<add level="3" folder="%GAME_FOLDER%/Prefabs" recurse="1"/>
+	<add level="3" folder="%GAME_FOLDER%/Sounds" recurse="1"/>
+	<exclude level="1" file="%GAME_FOLDER%/config/config.dat"/>
+	<exclude level="1" folder="%GAME_FOLDER%/Shaders/Cache" recurse="1"/>
+</protect>
+

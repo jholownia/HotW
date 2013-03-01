@@ -1,0 +1,40 @@
+<SelectionTrees>
+ <SelectionTree name="Cover2ST" type="BehaviorSelectionTree">
+  <Variables>
+   <Variable name="IncomingFire"/>
+   <Variable name="RpgAttack"/>
+   <Variable name="AvoidTank"/>
+   <Variable name="AvoidVehicle"/>
+   <Variable name="Threatened"/>
+   <Variable name="ThreatenedStandby"/>
+   <Variable name="Interested"/>
+   <Variable name="Hide"/>
+   <Variable name="Seek"/>
+   <Variable name="Panic"/>
+   <Variable name="Attack"/>
+   <Variable name="AttackGroup"/>
+   <Variable name="Search"/>
+   <Variable name="Reload"/>
+   <Variable name="CallReinforcement"/>
+  </Variables>
+  <SignalVariables />
+  <LeafTranslations />
+  <Priority name="Root">
+   <Leaf name="Cover2AttackST" condition="Attack"/>
+   <Leaf name="Cover2AttackGroupST" condition="AttackGroup"/>
+   <Leaf name="Cover2ThreatenedST" condition="Threatened"/>
+   <Leaf name="Cover2SeekST" condition="Seek"/>
+   <Leaf name="Cover2SearchST" condition="Search"/>
+   <Leaf name="Cover2ThreatenedStandbyST" condition="ThreatenedStandby"/>
+   <Leaf name="Cover2RPGAttackST" condition="RpgAttack"/>
+   <Leaf name="Cover2AvoidTankST" condition="AvoidTank"/>
+   <Leaf name="Cover2AvoidVehicleST" condition="AvoidVehicle"/>
+   <Leaf name="Cover2PanicST" condition="Panic"/>
+   <Leaf name="Cover2ReloadST" condition="Reload"/>
+   <Leaf name="Cover2InterestedST" condition="Interested"/>
+   <Leaf name="Cover2HideST" condition="Hide"/>
+   <Leaf name="Cover2CallReinforcementST" condition="CallReinforcement"/>
+   <Leaf name="Cover2IdleST"/>
+  </Priority>
+ </SelectionTree>
+</SelectionTrees>

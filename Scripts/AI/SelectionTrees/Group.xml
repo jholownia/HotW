@@ -1,0 +1,19 @@
+<SelectionTrees>
+ <SelectionTree name="DefaultGroup" type="CoordinationSelectionTree">
+  <Variables>
+   <Variable name="AreaSearch"/>
+   <Variable name="UnderPressure"/>
+   <Variable name="Sweep"/>
+   <Variable name="InvestigateMemberDeath"/>
+  </Variables>
+  <SignalVariables />
+  <LeafTranslations />
+  <Priority name="Root">
+   <Leaf name="GroupAreaSearch" condition="AreaSearch"/>
+   <Leaf name="GroupDefend" condition="UnderPressure"/>
+   <Leaf name="GroupSweep" condition="Sweep"/>
+   <Leaf name="GroupInvestigateMemberDeath" condition="InvestigateMemberDeath"/>
+   <Leaf name="DEFAULT"/>
+  </Priority>
+ </SelectionTree>
+</SelectionTrees>

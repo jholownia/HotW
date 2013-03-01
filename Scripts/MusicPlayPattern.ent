@@ -1,0 +1,4 @@
+<Entity
+ Name="MusicPlayPattern"
+ Script="Scripts/Entities/Sound/MusicPlayPattern.lua"
+/>

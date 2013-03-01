@@ -1,0 +1,4 @@
+<Entity
+ Name="MissionHint"
+ Script="Scripts/Entities/Sound/MissionHint.lua"
+/>

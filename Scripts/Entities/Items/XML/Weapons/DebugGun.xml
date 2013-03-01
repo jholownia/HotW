@@ -1,0 +1,62 @@
+<item name="DebugGun" class="DebugGun" category="debug" priority="1">
+	<params>
+		<param name="debug" 		value="1" />
+		<param name="giveable" 		value="0" />
+		<param name="selectable" 	value="1" />
+		<param name="pose" 			value="rifle" />
+	</params>	
+	<geometry>		
+		<firstperson name="Objects/Weapons/Scar/scar_fp.chr"/>
+		<thirdperson name="Objects/Weapons/Scar/scar_tp.cgf"/>
+		<boneAttachments>
+			<attachment target="firstperson" name="muzzle_flash_effect" bone="weapon_term" position="0,0,-.075" />
+			<attachment target="firstperson" name="muzzle_flash_light" bone="weapon_term" />
+		</boneAttachments>
+	</geometry>
+	<actions>
+		<action name="select">
+			<animation target="firstperson" name="select_01" />
+			<animation target="owner" name="select" />
+			<sound target="firstperson" name="sounds/weapons:scar:select_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:scar:select_3p" radius="2" />
+		</action>
+		<action name="deselect">
+			<animation target="firstperson" name="deselect_scar" />
+			<animation target="owner" name="deselect" />
+			<sound target="firstperson" name="sounds/weapons:scar:deselect_fp" radius="2" />
+			<sound target="thirdperson" name="sounds/weapons:scar:deselect_3p" radius="2" />
+		</action>
+		<action name="idle">
+			<animation target="firstperson" name="idle_%hand%_%suffix%01" speed="0.7"/>
+			<animation target="owner" name="idle" />
+		</action>				
+		<action name="fire">
+			<animation target="firstperson" name="fire_bullets_right_%suffix%01" />
+			<animation target="owner" name="shoot" />
+			<sound target="firstperson" name="sounds/weapons:scar:fire_single_fp" radius="200" static="0" />
+			<sound target="thirdperson" name="sounds/weapons:scar:fire_single_3p" radius="200" static="0" />
+		</action>
+	
+		<action name="zoom_in">
+			<animation target="firstperson" name="zoom_in_%suffix%01" speed="2.0" />
+		</action>
+		<action name="zoom_out">
+			<animation target="firstperson" name="zoom_out_%suffix%01" speed="2.0" />
+		</action>
+	</actions>
+		
+	<zoommodes>
+		<zoommode type="default">
+			<zoom>
+				<param name="layer" value="zoomed" />
+				<param name="zoom_in_time" value="0.2" />
+				<param name="zoom_out_time" value="0.2" />
+				<stages>
+					<stage value="1.4" />
+				</stages>
+			</zoom>
+		</zoommode>
+		<zoommode name="IronSight" type="IronSight">
+		</zoommode>
+	</zoommodes>
+</item>

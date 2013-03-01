@@ -1,0 +1,6 @@
+<!-- OBSOLETE ENTITY - NO ART ASSSETS-->
+<Entity
+ Name="SwitchPlayerModel"
+ Script="Scripts/Entities/Animation/SwitchPlayerModel.lua" 
+ Invisible="1"
+/>

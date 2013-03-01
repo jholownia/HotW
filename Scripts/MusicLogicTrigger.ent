@@ -1,0 +1,4 @@
+<Entity
+ Name="MusicLogicTrigger"
+ Script="Scripts/Entities/Sound/MusicLogicTrigger.lua"
+/>

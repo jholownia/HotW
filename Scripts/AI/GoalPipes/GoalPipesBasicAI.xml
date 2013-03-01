@@ -1,0 +1,30 @@
+<GoalPipes>
+	
+	<GoalPipe name="bai_idle_st">
+		<Locate name="player" />
+	</GoalPipe>	
+	
+	<GoalPipe name="bai_attack_st">
+		<Timeout intervalMin="0.1" intervalMax="1"/>
+		<Speed id="Walk"/>
+		<Stance id="Stand"/>
+		<Group>
+			<Locate name="atttarget"/>
+			<LookAt useLastOp="true" continuous="true" useBodyDir="true"/>
+		</Group>
+		<Timeout intervalMin="1.0" intervalMax="1.5"/>
+		
+		<FireCmd mode="Burst"/>
+		<Timeout interval="0.2"/>
+		<LookAround blocking="false" lookAroundRange="360" scanRange="5" interval="60" breakOnLiveTarget="true"/>
+		<Timeout intervalMin="0.1" intervalMax="1.0"/>
+	</GoalPipe>	
+	
+	<GoalPipe name="ApproachAndShootObject">
+		<Speed blocking="false" id="Run"/>
+		<FireCmd mode="Burst"/>
+		<LookAround blocking="false" lookAroundRange="360" scanRange="5" interval="60" breakOnLiveTarget="true"/>
+		<Timeout intervalMin="1.0" intervalMax="4.0"/>
+	</GoalPipe>
+	
+</GoalPipes>

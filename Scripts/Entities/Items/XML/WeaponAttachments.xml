@@ -1,0 +1,23 @@
+<WeaponAttachments>
+	<WeaponAttachment name="back_item_attachment_01" type="Bone">
+		<Bone name="Bip01 Spine2"/>
+		<Offset x="0.2" y="-0.2" z="1.3"/>
+		<Rotation x="90.0" y="0.0" z="-90.0"/>
+	</WeaponAttachment>
+	
+	<WeaponAttachment name="back_item_attachment_02" type="Bone">
+		<Bone name="Bip01 Spine2"/>
+		<Offset x="-0.2" y="-0.2" z="1.3"/>
+		<Rotation x="90.0" y="0.0" z="90.0"/>
+	</WeaponAttachment>
+	
+	<WeaponAttachment name="c4_front" type="Face">
+		<Offset x="0.0" y="0.22" z="1.3"/>
+		<Rotation x="90.0" y="0.0" z="90.0"/>
+	</WeaponAttachment>
+	
+	<WeaponAttachment name="c4_back" type="Face">
+		<Offset x="0.0" y="-0.22" z="1.3"/>
+		<Rotation x="90.0" y="0.0" z="90.0"/>
+	</WeaponAttachment>
+</WeaponAttachments>

@@ -1,0 +1,117 @@
+<Types>
+	<!-- Default values -->
+	<!--
+	<Type
+		name="AIPATH_DEFAULT"
+		navCapMask="All"
+		triangularResistanceFactor="0"
+		waypointResistanceFactor="0"
+		flightResistanceFactor="0"
+		volumeResistanceFactor="0"
+		roadResistanceFactor="0"
+		waterResistanceFactor="0"
+		maxWaterDepth="10000"
+		minWaterDepth="-10000"
+		exposureFactor="0"
+		dangerCost="0"
+		zScale="1"
+		customNavCapsMask="0"
+		radius="0.3"
+		height="2"
+		maxSlope="0"
+		id="-1"
+		avoidObstacles="true"/>
+	-->
+	<!-- Possible values (comma-separated) for attribute "navCapMask" are:
+		"Unset",
+		"Triangular",
+		"WaypointHuman",
+		"Waypoint3DSurface,
+		"Flight",
+		"Road",
+		"SmartObject",
+		"Free2D",
+		"Surface",
+		"Custom",
+		"Air",
+		"All"
+	-->
+
+
+	<!-- Character that travels on the surface but has no preferences -->
+	<Type
+		name="AIPATH_DEFAULT"
+		navCapMask="Triangular, WaypointHuman, SmartObject"
+		waterResistanceFactor="5"
+		maxWaterDepth="0.5"
+		dangerCost="20"
+		zScale="7"
+		radius="0.3"
+		height="2"
+		maxSlope="45"
+		id="1"/>
+
+	<Type
+		name="AIPATH_HUMAN"
+		navCapMask="Triangular, WaypointHuman, SmartObject"
+		waterResistanceFactor="5"
+		maxWaterDepth="0.5"
+		dangerCost="20"
+		zScale="7"
+		maxSlope="45"
+		id="2"/>
+
+	<!-- Default properties for car/vehicle agents -->
+	<Type
+		name="AIPATH_CAR"
+		navCapMask="Surface"
+		triangularResistanceFactor="18"
+		waypointResistanceFactor="18"
+		maxWaterDepth="1.5"
+		zScale="7"
+		id="3"/>
+
+	<Type
+		name="AIPATH_TANK"
+		navCapMask="Surface"
+		triangularResistanceFactor="18"
+		waypointResistanceFactor="18"
+		maxWaterDepth="1.5"
+		zScale="7"
+		id="4"/>
+	
+<!-- Default properties for boat agents -->
+	<Type
+		name="AIPATH_BOAT"
+		navCapMask="Triangular, Road"
+		minWaterDepth="1.5"
+		zScale="0"
+		id="5"/>
+
+	<!-- Default properties for flight (heli, scout etc) agents -->
+	<Type
+		name="AIPATH_HELI"
+		navCapMask="Flight, SmartObject"
+		maxWaterDepth="0"
+		minWaterDepth="0"
+		id="6"/>
+
+	<!-- Default properties for 3D agents -->
+	<Type
+		name="AIPATH_3D"
+		navCapMask="Volume, SmartObject, Road"
+		maxWaterDepth="0"
+		minWaterDepth="0"
+		id="7"/>
+
+	<Type
+		name="AIPATH_RACING_CAR"
+		navCapMask="Surface"
+		triangularResistanceFactor="18"
+		waypointResistanceFactor="18"
+		maxWaterDepth="1.5"
+		zScale="7"
+		avoidObstacles="false"
+		id="8"/>
+
+</Types>

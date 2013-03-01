@@ -1,0 +1,8 @@
+<SelectionTrees>
+ <SelectionTree name="Dummy" type="BehaviorSelectionTree">
+  <Variables />
+  <SignalVariables />
+  <LeafTranslations />
+  <Leaf name="DummyBehaviorThatShouldNotExist"/>
+ </SelectionTree>
+</SelectionTrees>

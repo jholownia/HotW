@@ -1,0 +1,4 @@
+<Entity
+ Name="CameraTarget"
+ Script="Scripts/Entities/Others/CameraTarget.lua"
+/>

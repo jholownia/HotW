@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<!-- Death and Hit Reactions System Param Definition -->
+
+<!-- DTD for defining entities and avoid duplication as much as possible -->
+<!DOCTYPE HitDeathReactions_Definitions [
+	<!-- Internal General XML Entity to store cardinal entities used by several properties -->
+	<!ENTITY ECardinalDirections "
+  	<Enum>
+  		<!-- 90 degrees cone directions -->
+			<Value>left</Value>
+			<Value>right</Value>
+			<Value>forward</Value>
+			<Value>back</Value>
+			
+			<!-- 180 degrees directions -->
+			<Value>ahead</Value>
+			<Value>behind</Value>
+			<Value>rightSide</Value>
+			<Value>leftSide</Value>
+		</Enum>
+	">
+	
+	<!ENTITY ValidationProperties '
+  	<Property name="validationFunc" type="string" optional="1" />
+		<Property name="destructibleEvent" type="string" optional="1" /> <!-- used for destructible-system-driven reactions -->
+  	<Property name="minimumSpeed" type="float" optional="1" />
+  	<Property name="maximumSpeed" type="float" optional="1" />
+  	<Property name="minimumDamage" type="float" optional="1" />
+  	<Property name="maximumDamage" type="float" optional="1" />
+		<Array 		name="OnlyWhenPassingHealthThresholds" elementName="HealthThreshold" type="float" extendable="1" optional="1"/>
+  	<Property name="minimumDistanceToShooter" type="float" optional="1" />
+  	<Property name="maximumDistanceToShooter" type="float" optional="1" />
+  	<Property name="movementDirection" type="string" optional="1" >
+  		&ECardinalDirections;
+  	</Property>
+  	<Property name="shotOrigin" type="string" optional="1">
+  		&ECardinalDirections;
+  	</Property>
+		<Array name="AllowedStances" elementName="Stance" type="string" extendable="1" optional="1">
+  		<Enum>
+  			<!-- Same global variable names as registered on ScriptBind_AI -->
+  			<Value>STANCE_PRONE</Value>
+  			<Value>STANCE_CROUCH</Value>
+  			<Value>STANCE_STAND</Value>
+  			<Value>STANCE_RELAXED</Value>
+  			<Value>STANCE_ALERTED</Value>
+  			<Value>STANCE_STEALTH</Value>
+  			<Value>STANCE_LOW_COVER</Value>
+  			<Value>STANCE_HIGH_COVER</Value>
+  			<Value>STANCE_SWIM</Value>
+  			<Value>STANCE_LASTSTAND</Value>
+  		</Enum>
+  	</Array>
+  	<Property name="probabilityPercent" type="float" optional="1"/>
+		<Array name="AllowedParts" elementName="Part" type="string" extendable="1" optional="1">
+			<Enum>
+				<!-- sg1_preset.chr, shotgunner_red.cdf physic bones -->
+				<Value>Bip01 Head</Value>
+				<Value>Bip01 Spine1</Value>
+				<Value>Bip01 Spine</Value>
+				<Value>Bip01 Pelvis</Value>
+				<Value>Bip01 L UpperArm</Value>
+				<Value>Bip01 R UpperArm</Value>
+				<Value>Bip01 L ForeArm</Value>
+				<Value>Bip01 R ForeArm</Value>
+				<Value>Bip01 L Thigh</Value>
+				<Value>Bip01 R Thigh</Value>
+				<Value>Bip01 L Calf</Value>
+				<Value>Bip01 R Calf</Value>				
+				<Value>Bip01 L Foot</Value>
+				<Value>Bip01 R Foot</Value>	
+				
+				<!-- AlienGrunt parts  -->
+				<Value>Pelvis</Value>
+				<Value>R Leg01</Value>
+				<Value>R Leg02</Value>
+				<Value>R Leg03</Value>
+				<Value>R Foot</Value>
+				<Value>L Leg01</Value>
+				<Value>L Leg02</Value>
+				<Value>L Leg03</Value>
+				<Value>L Foot</Value>
+				<Value>Spine02</Value>
+				<Value>Spine03</Value>
+				<Value>Spine04</Value>
+				<Value>jellyBone</Value>
+				<Value>Rope01 Seg01</Value>
+				<Value>Rope02 Seg01</Value>
+				<Value>Rope03 Seg01</Value>
+				<Value>jelly_back_proxy</Value>
+				<Value>Neck 01</Value>
+				<Value>Head</Value>
+				<Value>R Arm01</Value>
+				<Value>R Arm02</Value>
+				<Value>R Arm03</Value>
+				<Value>R Arm04</Value>
+				<Value>R Hand</Value>
+				<Value>R ShoulderPad</Value>
+				<Value>L Arm01</Value>
+				<Value>L Arm02</Value>
+				<Value>L Arm03</Value>
+				<Value>L Arm04</Value>
+				<Value>L Arm05</Value>
+				<Value>L ShoulderPad</Value>
+				
+				<!-- AlienGrunt and AlienStalker attachments -->
+				<Value>armor_head</Value>
+				<Value>armor_chest_l</Value>
+				<Value>armor_chest_r</Value>
+				
+				<!-- AlienStalker parts -->
+				<Value>Pelvis</Value>
+				<Value>R Leg01</Value>
+				<Value>R Leg02</Value>
+				<Value>R Leg03</Value>
+				<Value>R Foot</Value>
+				<Value>L Leg01</Value>
+				<Value>L Leg02</Value>
+				<Value>L Leg03</Value>
+				<Value>L Foot</Value>
+				<Value>Spine01</Value>
+				<Value>Spine03</Value>
+				<Value>Spine04</Value>
+				<Value>Neck 01</Value>
+				<Value>Head</Value>
+				<Value>L Arm01</Value>
+				<Value>L Arm02</Value>
+				<Value>L Arm03</Value>
+				<Value>L Arm04</Value>
+				<Value>L Arm05</Value>
+				<Value>R Arm01</Value>
+				<Value>R Arm02</Value>
+				<Value>R Arm03</Value>
+				<Value>R Arm04</Value>
+				<Value>R Clavicle</Value>
+				<Value>R Arm05</Value>
+				<Value>L Clavicle</Value>
+				
+				<!-- AlienHeavy parts -->
+				<Value>Pelvis</Value>
+				<Value>L Leg01</Value>
+				<Value>L Leg02</Value>
+				<Value>L Leg03</Value>
+				<Value>L Arm02 Joint04</Value>
+				<Value>R Leg01</Value>
+				<Value>R Leg02</Value>
+				<Value>R Leg03</Value>
+				<Value>L Arm02 Joint03</Value>
+				<Value>Spine02</Value>
+				<Value>Spine03</Value>
+				<Value>Spine04</Value>
+				<Value>Head</Value>
+				<Value>Rope04 Seg01</Value>
+				<Value>Rope03 Seg01</Value>
+				<Value>R Arm01 Joint01</Value>
+				<Value>R Arm01 Joint02</Value>
+				<Value>R Arm01 Joint03</Value>
+				<Value>R Arm01 Joint04</Value>
+				<Value>L Arm02 Joint02</Value>
+				<Value>R Arm02 Joint01</Value>
+				<Value>R Arm02 Joint02</Value>
+				<Value>R Arm02 Joint03</Value>
+				<Value>R Arm02 Joint04</Value>
+				<Value>Rope02 Seg01</Value>
+				<Value>L Clavicle</Value>
+				<Value>L Arm01 Joint01</Value>
+				<Value>L Arm01 Joint02</Value>
+				<Value>L Arm01 Joint03</Value>
+				<Value>L Arm01 Joint04</Value>
+				<Value>L Hand</Value>
+				<Value>L Arm02 Joint01</Value>
+				<Value>Rope01 Seg01</Value>
+				<Value>R Foot</Value>
+				<Value>L Foot</Value>
+				<Value>R Clavicle</Value>
+				<Value>R Hand</Value>
+				
+				<!-- AlienHeavy attachments -->
+				<Value>armor_back_high_left</Value>
+				<Value>armor_back_high_right</Value>
+				<Value>armor_back_low_left</Value>
+				<Value>armor_back_low_right</Value>
+				<Value>armor_chest_high_left</Value>
+				<Value>armor_chest_high_right</Value>
+				<Value>armor_chest_low_left</Value>
+				<Value>armor_chest_low_right</Value>
+				<Value>armor_head</Value>
+				<Value>jelly_back</Value>
+				<Value>mortar_plates</Value>
+				
+				<!-- AlienPinger attachments -->
+				<Value>Rear Leg01</Value>
+				<Value>Rear Leg02</Value>
+				<Value>Rear Leg03</Value>
+				<Value>Rear Leg04</Value>
+				<Value>Rear_Foot</Value>
+				<Value>L Hip</Value>
+				<Value>L Leg01</Value>
+				<Value>L Leg02</Value>
+				<Value>L Leg03</Value>
+				<Value>L_Foot</Value>
+				<Value>R Hip</Value>
+				<Value>R Leg01</Value>
+				<Value>R Leg02</Value>
+				<Value>R Leg03</Value>
+				<Value>R_Foot</Value>
+				<Value>Spine1</Value>
+				<Value>Head</Value>
+				<Value>L Gun01</Value>
+				<Value>L Gun02</Value>
+				<Value>R Gun01</Value>
+				<Value>R Gun02</Value>
+				<Value>Motor Bone</Value>
+				<Value>Ping Mechanism</Value>
+				<Value>Back Bone</Value>
+				
+				<!-- Pinger attachments -->
+				<Value>armor_back_left</Value>
+				<Value>armor_back_right</Value>
+				<Value>armor_mid_left</Value>
+				<Value>armor_mid_right</Value>
+				<Value>armor_motor_center</Value>
+				<Value>armor_motor_left</Value>
+				<Value>armor_motor_right</Value>
+				<Value>shell_motor</Value>
+				
+				<!-- add physic bone names for other skeletons that use this system from here -->
+			</Enum>
+		</Array>
+		<Array name="AllowedHitTypes" elementName="HitType" type="string" extendable="1" optional="1">
+			<Enum>
+				<!-- Should be in synch with CGameRulesCommonDamageHandling::Init -->
+				<Value>melee</Value>
+				<Value>collision</Value>
+				<Value>frag</Value>
+				<Value>explosion</Value>			
+				<Value>fall</Value>
+				<Value>normal</Value>
+				<Value>fire</Value>
+				<Value>bullet</Value>
+				<Value>repair</Value>
+				<Value>event</Value>									
+				<Value>disableCollisions</Value>
+        <Value>environmentalMelee</Value>
+        <Value>environmentalThrow</Value>
+			</Enum>
+		</Array>
+		<Array name="AllowedProjectiles" elementName="Projectile" type="string" extendable="1" optional="1">
+			<!-- ToDo Supply an enum constraint list when there is a definitive list of weapon classes 
+			(currently too many classes and changing too often to be worth writing a list here right now) -->
+		</Array>
+		<Array name="AllowedWeapons" elementName="Weapon" type="string" extendable="1" optional="1">
+			<!-- ToDo Supply an enum constraint list when there is a definitive list of weapon classes 
+			(currently too many classes and changing too often to be worth writing a list here right now) -->
+		</Array>
+  	<Property name="onlyIfUsingMountedItem" type="bool" optional="1" />
+	'>
+
+	<!-- Internal General XML Entity to reference common properties on hit and death reactions -->	
+  <!ENTITY CommonProperties '
+  	<!-- Validation properties -->
+  	&ValidationProperties;
+  	<Array name="ValidationSection" elementName="Validation" extendable="1" optional="1">
+  		&ValidationProperties;
+  	</Array>
+  
+  	<!-- Execution properties -->
+  	<Table name="AnimGraphReaction" optional="1">
+  		<Property name="inputValue" type="string" optional="0" />
+			<Array name="Variations" elementName="Variation" extendable="1" optional="1">
+				<Property name="name" type="string" />
+				<Property name="value" type="string" />
+			</Array>
+  	</Table>
+  	
+  	<Property name="animName" type="string" optional="1" />
+  	<Table name="ReactionAnim" optional="1">
+    	<Property name="additive" type="bool" optional="1" />  	
+    	<Property name="layer" type="int" optional="1" />  	
+    	<Property name="overrideTransTimeToAG" type="float" optional="1" />
+			<Array name="AnimNames" elementName="AnimName" extendable="1" optional="1">
+				<Property name="name" type="string" />
+				<Property name="variants" type="int" optional="1"/>
+			</Array>  	
+  	</Table>
+  	
+  	<Property name="interactiveAction" type="string" optional="1"/>
+  	<Property name="reactionFunc" type="string" optional="1" />
+  	<Property name="AISignal" type="string" optional="1" />
+  	<Property name="ragdollOnCollision" type="bool" optional="1" />
+		<Property name="collisionCheckIntersectionWithGround" type="bool" optional="1" />
+  	<Property name="noRagdollOnEnd" type="bool" optional="1" />
+  	<Property name="noAnimCamera" type="bool" optional="1" />
+		<Property name="reactionFinishesAiming" type="bool" optional="1" />
+		<Property name="endVelocity" type="Vec3" optional="1" />
+  	<Property name="reactionOnCollision" type="int" optional="1" />
+  	<Property name="snapOrientationAngle" type="int" optional="1"/>
+  	<Property name="snapToMovementDir" type="int" optional="1"/>
+  	<Property name="pauseAI" type="bool" optional="1" />
+  '>
+
+  <!-- This external general entity definition would be far more convenient than an internal entity, 
+  but since currently CryEngine hasn't defined its own ExternalEntityRefHandler on Expat we cannot 
+  parse files on external entities
+  <!ENTITY CommonProperties SYSTEM "./HitDeathReactions_Def_CommonProperties.xml"> -->
+]>
+
+<Definition root="DeathHitReactionsParams">
+	<Table name="HitDeathReactionsConfig" optional="1">
+  	<Property name="collisionBone" type="string" optional="1" />  	
+  	<Property name="collisionRadius" type="float" optional="1" />  	
+  	<Property name="collisionVerticalOffset" type="float" optional="1" />  	
+  	<Property name="collMaxHorzAngle" type="float" optional="1" />  	
+  	<Property name="collMaxMovAngle" type="float" optional="1" />  	
+  	<Property name="collReactionStartDist" type="float" optional="1" />  	
+  	<Property name="maxRagdolImpulse" type="float" optional="1" />  	
+  	<Property name="maximumReactionTime" type="float" optional="1" />
+	</Table>
+
+  <Array name="HitReactionParams" elementName="HitReactionParam" extendable="1" optional="1">
+  	&CommonProperties;
+  </Array> 
+  
+  <Array name="DeathReactionParams" elementName="DeathReactionParam" extendable="1" optional="1">
+  	&CommonProperties;
+  </Array>
+
+  <Array name="CollisionReactionParams" elementName="CollisionReaction" extendable="1" optional="1">
+  	&CommonProperties;
+  </Array>  
+</Definition>

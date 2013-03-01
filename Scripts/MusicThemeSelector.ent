@@ -1,0 +1,4 @@
+<Entity
+ Name="MusicThemeSelector"
+ Script="Scripts/Entities/Sound/MusicThemeSelector.lua"
+/>

@@ -1,0 +1,16 @@
+<SelectionTrees>
+
+	<SelectionTree name="RacingCar" type="BehaviorSelectionTree">
+
+		<Variables>
+			<Variable name="ai_driven"/>
+		</Variables>
+
+		<Priority name="Root">
+			<Leaf name="RacingCarRacing" condition="ai_driven"/>
+			<Leaf name="RacingCarIdle"/>
+		</Priority>
+
+	</SelectionTree>
+
+</SelectionTrees>

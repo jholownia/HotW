@@ -1,0 +1,68 @@
+<BattleDust>
+	<params fogspawnpower="1300" defaultlifetime="1" maxlifetime="15" maxeventpower="10000" minparticlecount="0" maxparticlecount="100" distancebetweenevents="100" />
+	<events>
+		<shotfired>
+			<weapon name="default" power="20" />
+			<weapon name="SOCOM" power="25" />
+			<weapon name="SCAR" power="20" />
+			<weapon name="LAW" power="40" />
+			<weapon name="FragGrenade" power="0" />
+			<weapon name="SMG" power="20" />
+			<weapon name="FY71" power="20" />
+			<weapon name="Shotgun" power="25" />
+			<weapon name="DSG1" power="40" />
+			<weapon name="C4" power="0" />
+			<weapon name="SmokeGrenade" power="0" />
+			<weapon name="FlashbangGrenade" power="0" />
+			<weapon name="GaussRifle" power="40" />
+			<weapon name="Hurricane" power="10" />
+			<weapon name="TACGun" power="120" />
+			<weapon name="AlienMount" power="20" />
+			<weapon name="MOARAttach" power="20" />
+			<weapon name="Claymore" power="0" />
+			<weapon name="Fists" power="0" />
+			<weapon name="Grenades" power="0" />
+			<weapon name="AACannon" power="10" />
+			<weapon name="AARocketLauncher" power="60" />
+			<weapon name="APCCannon" power="30" />
+			<weapon name="APCRocketLauncher" power="60" />
+			<weapon name="Asian50Cal" power="20" />
+			<weapon name="AsianCoaxialGun" power="20" />
+			<weapon name="AutoAA" power="20" />
+			<weapon name="AvengerCannon" power="10" />
+			<weapon name="BunkerBuster" power="40" />
+			<weapon name="GaussAAA" power="40" />
+			<weapon name="GaussCannon" power="40" />
+			<weapon name="Hellfire" power="80" />
+			<weapon name="SideWinder" power="80" />
+			<weapon name="TACCannon" power="100" />
+			<weapon name="TankCannon" power="200" />
+			<weapon name="USCoaxialGun" power="20" />
+			<weapon name="USTankCannon" power="60" />
+			<weapon name="VehicleGaussMounted" power="50" />
+			<weapon name="VehicleHurricane" power="10" />
+			<weapon name="VehicleMOAC" power="10" />
+			<weapon name="VehicleMOACMounted" power="10" />
+			<weapon name="VehicleMOAR" power="20" />
+			<weapon name="VehicleMOARMounted" power="20" />
+			<weapon name="VehicleRocketLauncher" power="80" />
+			<weapon name="VehicleShiTenV2" power="20" />
+			<weapon name="VVehicleSingularity" power="20" />
+			<weapon name="VehicleUSMachinegun" power="20" />
+		</shotfired>
+		<bulletimpact>
+			<ammo name="default" power="15" />
+			<ammo name="lightbullet" power="20" lifetime="1" />			
+		</bulletimpact>
+		<explosion>
+			<explosive name="default" power="700" lifetime="15" />			
+			<explosive name="c4explosive" power="600" lifetime="10" />
+			<explosive name="explosivegrenade" power="400" lifetime="10" />
+			<explosive name="tankaa" power="100" lifetime="3" />
+		</explosion>
+		<vehicleexplosion>
+			<vehicle name="default" power="900" />
+			<vehicle name="US_ltv" power="900" />
+		</vehicleexplosion>
+	</events>
+</BattleDust>

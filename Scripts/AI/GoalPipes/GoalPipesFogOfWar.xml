@@ -1,0 +1,32 @@
+<GoalPipes>
+	<GoalPipe name="fow_fire_st">
+		<Locate name="player" />
+		<FireCmd useLastOp="true" blocking="true" mode="Burst" />
+		<Timeout blocking="true" intervalMin="1" intervalMax="1"/>
+		<FireCmd mode="Off"/>
+		<Script code="entity.Behavior:AnalyzeSituation(entity);" />
+	</GoalPipe>
+
+	<GoalPipe name="fow_escape_st">
+		<Speed id="Run"/>
+		<Locate name="player" />
+		<TacticalPos name="FogOfWarEscapeCoverQuery" register="Cover"/>
+		<If IF_LASTOP_SUCCEED="">
+			<Hide register="Cover"/>
+		<Else/>
+			<Script code="AI.SetBehaviorVariable(entity.id, 'IsClose', false)" />
+		</If>
+		<Script code="entity.Behavior:AnalyzeSituation(entity);" />
+	</GoalPipe>
+	
+	<GoalPipe name="fow_seek_st">
+		<Locate name="player" />
+		<Speed id="Run"/>
+		<Stick blocking="true" distance="10" useLastOp="true" />
+		<Script code="entity.Behavior:AnalyzeSituation(entity);" />
+	</GoalPipe>	
+	
+	<GoalPipe name="fow_idle_st">
+		<Locate name="player" />
+	</GoalPipe>	
+</GoalPipes>

@@ -1,0 +1,21 @@
+<SelectionTrees>
+ <SelectionTree name="FogOfWar" type="BehaviorSelectionTree">
+  <Variables>
+   <Variable name="IsFar"/>
+   <Variable name="IsClose"/>
+   <Variable name="AwareOfPlayer"/>
+  </Variables>
+  <SignalVariables>
+   <Signal name="OnEnemySeen" variable="AwareOfPlayer" value="true"/>
+   <Signal name="OnNoTarget" variable="AwareOfPlayer" value="false"/>
+   <Signal name="OnLostSightOfTarget" variable="AwareOfPlayer" value="false"/>
+  </SignalVariables>
+  <LeafTranslations />
+  <Priority name="Root">
+   <Leaf name="FogOfWarSeekST" condition="IsFar"/>
+   <Leaf name="FogOfWarEscapeST" condition="IsClose"/>
+   <Leaf name="FogOfWarAttackST" condition="AwareOfPlayer"/>
+   <Leaf name="FogOfWarIdleST"/>
+  </Priority>
+ </SelectionTree>
+</SelectionTrees>
