@@ -2,7 +2,7 @@
 -- Common Globals and Definitions.
 ----------------------------------------------------
 ----------------------------------------------------
-
+-- (jh) testing
 -- data structure passed to the Signals, use this global to avoid temporary lua mem allocation
 g_SignalData_point = {x=0,y=0,z=0};
 g_SignalData_point2 = {x=0,y=0,z=0};

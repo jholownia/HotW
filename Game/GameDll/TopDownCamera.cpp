@@ -1,3 +1,5 @@
+// (jh) topdowncamera.cpp
+
 #include "StdAfx.h"
 #include "TopDownCamera.h"
 
@@ -40,7 +42,7 @@ void TopDownCamera::Init(CPlayer const& player, SViewParams& viewParams)
 	// Scrolling speed
 	m_scrollSpeed = 5.0f;
 
-	// Solve an equation to get the player in the middle
+	// Solve for getting the player in the middle
 }
 
 void TopDownCamera::Update( SViewParams& viewParams )
@@ -102,22 +104,69 @@ void TopDownCamera::Update( SViewParams& viewParams )
 	}
 
 	// Now set the height
-	/*
-	{
-		static ray_hit hit;
-		IPhysicalEntity* pSkipEntities[10];
-		int nSkip = 0;
-		
-		Vec3 start = m_rotation * Vec3(0,0,0) + m_position; // The vec would be offset, not needed here?
-		if (gEnv->pPhysicalWorld.RayWorldIntersection(start, ))
+	float groundZ;
+	if (getGroundLevel(groundZ))
+		m_position.z = groundZ + m_groundDistance + m_zOffset;
 
-	}
-	*/
-	
 
 	m_lastPosition = viewParams.position;
 	viewParams.position = m_position;
 	viewParams.rotation = m_rotation;
+}
+
+void TopDownCamera::OnHardwareMouseEvent( int iX,int iY,EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta )
+{
+	static float delta = 0.0;
+	delta += static_cast<float>(wheelDelta) * gEnv->pTimer->GetFrameTime();
+	if (-5 < delta < 5)
+		m_zOffset = delta;
+}
+
+bool TopDownCamera::getGroundLevel(float& z)
+{
+	IRenderer* pRenderer = gEnv->pRenderer;
+
+	if(!gEnv->pHardwareMouse || !pRenderer || !gEnv->p3DEngine || !gEnv->pSystem || !gEnv->pEntitySystem || !g_pGame->GetIGameFramework())
+		return 0;
+
+	IActor *pClientActor = g_pGame->GetIGameFramework()->GetClientActor();
+
+	if (!pClientActor)
+		return 0;
+		
+	int xPos = gEnv->pRenderer->GetWidth() / 2;
+	int yPos = gEnv->pRenderer->GetHeight() / 2;
+	
+	Vec3 vPos0(0,0,0);
+	pRenderer->UnProjectFromScreen((float)xPos, (float)yPos, 0, &vPos0.x, &vPos0.y, &vPos0.z);
+
+	Vec3 vPos1(0,0,0);
+	pRenderer->UnProjectFromScreen((float)xPos, (float)yPos, 1, &vPos1.x, &vPos1.y, &vPos1.z);
+
+	const Vec3 vDir = (vPos1-vPos0).GetNormalized();
+	
+	IPhysicalEntity *pPhysicalEnt = pClientActor->GetEntity() ? pClientActor->GetEntity()->GetPhysics() : NULL;
+
+	if(!pPhysicalEnt)
+		return 0;
+
+	static IPhysicalEntity* pSkipEnts[2];
+	pSkipEnts[0] = pPhysicalEnt;
+	int numSkipped = 1;
+		
+	entity_query_flags queryFlags = ent_terrain; // see physinterface.h for details	
+	static const unsigned int flags = rwi_stop_at_pierceable|rwi_colltype_any;
+	float  fRange = gEnv->p3DEngine->GetMaxViewDistance();
+
+	static ray_hit hit;
+
+	if (gEnv->pPhysicalWorld && gEnv->pPhysicalWorld->RayWorldIntersection(vPos0, vDir * fRange, queryFlags, flags, &hit, 1, pSkipEnts, numSkipped))
+	{
+		z = hit.pt.z; // also check hit.pTerrain and hit.distance
+		return true;
+	}
+
+	return false;
 }
 
 } // namespace hotw

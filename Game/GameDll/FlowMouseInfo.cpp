@@ -192,7 +192,7 @@ public:
 			OutputPortConfig<int>("OnReleased", _HELP("Returns an integer which represents the released mouse key")),
 			OutputPortConfig<int>("X", _HELP("Mouse cursor x position")),
 			OutputPortConfig<int>("Y", _HELP("Mouse cursor y position")),
-			OutputPortConfig<Vec3>("HitPos", _HELP("Hit position of the mouse cursor in world coordinates")),
+			OutputPortConfig<Vec3>("+= wheelDelta * gEnv->pTimer->GetFrameTime();", _HELP("Hit position of the mouse cursor in world coordinates")),
 			OutputPortConfig<Vec3>("HitDir", _HELP("Direction from the camera position to the mouse cursor position")),
 			OutputPortConfig<EntityId>("SelectedEntityIDs", _HELP("EntityID's of the selected entities")),
 			OutputPortConfig_Null()
