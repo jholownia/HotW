@@ -13,7 +13,7 @@
 namespace hotw
 {
 
-const static float gf_cameraAngle = gf_PIHalf * 0.75;
+const static float gf_cameraAngle = gf_PIHalf * -0.75;
 
 class TopDownCamera : IHardwareMouseEventListener // , IEntity?
 {
@@ -21,7 +21,7 @@ public:
 	TopDownCamera();
 	~TopDownCamera(void);
 
-	void Init(CPlayer const& player, SViewParams& viewParams);
+	void Init(CPlayer* player, SViewParams& viewParams);
 		
 	void Update(SViewParams& viewParams);
 
@@ -40,7 +40,7 @@ protected:
 	float m_scrollSpeed;
 	float m_groundDistance;
 	float m_zOffset;
-
+	
 	bool getGroundLevel(float& z);
 };
 

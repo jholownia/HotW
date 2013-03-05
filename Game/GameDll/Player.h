@@ -26,6 +26,7 @@
 #include "LookAim_Helper.h"
 #include "HitDeathReactionsDefs.h"
 
+
 class CPlayerMovement;
 class CPlayerRotation;
 struct IPlayerInput;
@@ -36,7 +37,10 @@ class CCameraInputHelper;
 class CHitDeathReactions;
 
 // (jh)
-class TopDownCamera;
+namespace hotw
+{
+	class TopDownCamera;
+}
 
 struct SPlayerStats : public SActorStats
 {
@@ -1061,6 +1065,9 @@ protected:
 	// ~PLAYERPREDICTION
 
 	CHitDeathReactionsPtr m_pHitDeathReactions;
+
+	// (jh)
+	hotw::TopDownCamera* m_topDownCamera;
 
 public:
 	IDebugHistoryManager* m_pDebugHistoryManager;

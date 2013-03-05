@@ -89,6 +89,8 @@ History:
 
 #include "HUD/UIManager.h"
 
+// (jh)
+#include <TopDownCamera.h>
 
 // enable this to check nan's on position updates... useful for debugging some weird crashes
 #define ENABLE_NAN_CHECK
@@ -246,12 +248,13 @@ m_bVoiceSoundRecursionFlag(false),
 m_fTimeSinceLastEffectFootStep(1000000.0f),
 m_footstepCounter(0),
 m_timeForBreath(0.0f),
-m_fLastEffectFootStepTime(0.0f)
+m_fLastEffectFootStepTime(0.0f),
+m_topDownCamera(NULL)
 {
 	for(int i = 0; i < ESound_Player_Last; ++i)
 		m_sounds[i] = 0;
 	m_vehicleViewDir.Set(0,1,0);
-	s_globPlayerList.push_back(this);
+	s_globPlayerList.push_back(this);	
 }
 
 CPlayer::~CPlayer()
@@ -1588,6 +1591,8 @@ void CPlayer::SetIK( const SActorFrameMovementParams& frameMovementParams )
 
 void CPlayer::UpdateView(SViewParams &viewParams)
 {
+	
+	
 	if (!m_pAnimatedCharacter)
 		return;
 
@@ -1615,6 +1620,12 @@ void CPlayer::UpdateView(SViewParams &viewParams)
 		pCamView->Update(viewParams);
 		viewParams.blend = m_viewBlending;
 		m_viewBlending=true;	// only disable blending for one frame
+
+		if (m_topDownCamera == NULL)
+		{
+			m_topDownCamera = new hotw::TopDownCamera;
+			m_topDownCamera->Init(this, viewParams);
+		}
 
 		//store the view matrix
 		m_clientViewMatrix.SetFromVectors(viewParams.rotation.GetColumn0(),viewParams.rotation.GetColumn1(),m_upVector,viewParams.position);
@@ -1700,9 +1711,13 @@ void CPlayer::PostUpdateView(SViewParams &viewParams)
 	COffHand * pOffHand=static_cast<COffHand*>(GetWeaponByClass(CItem::sOffHandClass));
 	if(pOffHand && (pOffHand->GetOffHandState()&(eOHS_GRABBING_NPC|eOHS_HOLDING_NPC|eOHS_THROWING_NPC)))
 		pOffHand->PostFilterView(viewParams);
+	if (m_topDownCamera)
+			m_topDownCamera->Update(viewParams);
+	
 	//
 	// (jaho) all this logic needs to go to camera
 	// (jh) debug
+	/*
 			
 		IRenderer* renderer = gEnv->pRenderer;	
 		static float color[] = {1,1,1,1};	
@@ -1772,6 +1787,7 @@ void CPlayer::PostUpdateView(SViewParams &viewParams)
 		
 	viewParams.position.x += offsetX;
 	viewParams.position.y += offsetY;
+	*/
 }
 
 void CPlayer::RegisterPlayerEventListener(IPlayerEventListener *pPlayerEventListener)
@@ -5732,7 +5748,7 @@ bool CPlayer::UpdateLadderAnimation(ELadderState eLS, ELadderDirection eLDIR, fl
 	default:
 		break;
 	}
-	//Manual animation Update
+	//Manual animation update
 
 	if(eLS==eLS_Climb)
 	{			
