@@ -135,8 +135,8 @@ bool TopDownCamera::getGroundLevel(float& z)
 	if (!pClientActor)
 		return false;
 		
-	int xPos = gEnv->pRenderer->GetWidth() / 2;
-	int yPos = gEnv->pRenderer->GetHeight() / 2;
+	int xPos = gEnv->pRenderer->GetWidth() * 0.5;
+	int yPos = gEnv->pRenderer->GetHeight() * 0.5;
 	
 	Vec3 vPos0(0,0,0);
 	pRenderer->UnProjectFromScreen((float)xPos, (float)yPos, 0, &vPos0.x, &vPos0.y, &vPos0.z);
