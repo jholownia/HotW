@@ -507,6 +507,7 @@
     <ClCompile Include="HUD\UILobbyMP.cpp" />
     <ClCompile Include=".\HUD\UIDialogs.cpp" />
     <ClCompile Include="HUD\WarningsManager.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Network\DownloadMgr.cpp" />
     <ClCompile Include="Network\FriendManager\GameFriendsManager.cpp" />
     <ClCompile Include="Network\GameNetworkUtils.cpp" />
@@ -765,6 +766,7 @@
     <ClInclude Include="HUD\WarningsManager.h" />
     <ClInclude Include="IGameRulesManager.h" />
     <ClInclude Include="ITelemetryCollector.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Network\DownloadMgr.h" />
     <ClInclude Include="Network\FriendManager\GameFriendData.h" />
     <ClInclude Include="Network\FriendManager\GameFriendsManager.h" />

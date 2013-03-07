@@ -843,6 +843,7 @@
     <ClCompile Include="TopDownCamera.cpp">
       <Filter>Hotw</Filter>
     </ClCompile>
+    <ClCompile Include="Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameStartup.h">
@@ -1541,6 +1542,7 @@
     <ClInclude Include="TopDownCamera.h">
       <Filter>Hotw</Filter>
     </ClInclude>
+    <ClInclude Include="Mouse.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GameActions.actions">
