@@ -26,7 +26,6 @@
 #include "LookAim_Helper.h"
 #include "HitDeathReactionsDefs.h"
 
-
 class CPlayerMovement;
 class CPlayerRotation;
 struct IPlayerInput;

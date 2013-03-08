@@ -12,8 +12,8 @@
 
 namespace hotw
 {
-
-const static float gf_cameraAngle = gf_PIHalf * -0.75;
+	
+const static float gf_cameraAngle = gf_PIHalf * 0.5;
 
 class TopDownCamera : IHardwareMouseEventListener // , IEntity?
 {
@@ -25,6 +25,8 @@ public:
 		
 	void Update(SViewParams& viewParams);
 
+	// void setHeightOffset(int delta);
+
 	virtual void OnHardwareMouseEvent(int iX,int iY,EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta);
 		
 protected:
@@ -34,7 +36,13 @@ protected:
 	Vec3 m_lastPosition;
 
 	// Rotation
-	Quat m_rotation;	
+	Quat m_rotation;
+	
+	// Direction (to not calculate it each frame)
+	Vec3 m_forwardVector;
+	Vec3 m_leftVector;
+
+	// add a vector toward center for changing height
 
 	// Other
 	float m_scrollSpeed;

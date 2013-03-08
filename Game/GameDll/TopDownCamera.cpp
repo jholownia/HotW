@@ -14,6 +14,7 @@
 #include <IViewSystem.h>
 #include "IHardwareMouse.h"
 
+
 namespace hotw
 {
 
@@ -29,19 +30,30 @@ TopDownCamera::~TopDownCamera(void)
 		gEnv->pHardwareMouse->RemoveListener(this);
 }
 
+// viewParams not used here
 void TopDownCamera::Init(CPlayer* player, SViewParams& viewParams)
 {
-	m_groundDistance = 15.0f;
+	m_groundDistance = 18.0f;
 	m_zOffset = 0.0f;
 	
-	m_position = m_lastPosition = player->GetEntity()->GetWorldPos();
-	m_rotation = player->GetEntity()->GetWorldRotation();
-	
-	// Initial height offset
-	m_position.z += m_groundDistance;
+	m_position = player->GetEntity()->GetWorldPos();
 
 	// Set top down angle
-	m_rotation.SetRotationX(gf_cameraAngle);
+	Ang3 viewAngle = player->GetEntity()->GetWorldAngles();	
+	viewAngle.x -= gf_cameraAngle;
+	m_rotation = Quat(viewAngle);
+
+
+	// Initial height offset
+	m_position.z += m_groundDistance;
+	
+	// playerOffset (so that the player is in the center)
+	Vec3 dirVector = player->GetEntity()->GetForwardDir();
+	m_position -= dirVector * 18;
+	
+	// Direction
+	m_forwardVector = dirVector.GetNormalized();	
+	m_leftVector = dirVector.GetRotated(Vec3(0,0,1), gf_PIHalf);
 	
 	// Scrolling speed
 	m_scrollSpeed = 25.0f;
@@ -49,12 +61,12 @@ void TopDownCamera::Init(CPlayer* player, SViewParams& viewParams)
 	// Unlink mouse input from the player (FIXME)
 	gEnv->pGame->GetIGameFramework()->GetIActionMapManager()->EnableFilter("no_mouse", true);
 
-	// Solve for getting the player in the middle
-
 
 	// Add mouse event listener
 	if(gEnv->pHardwareMouse)
 		gEnv->pHardwareMouse->AddListener(this);
+
+	m_lastPosition = m_position;
 }
 
 void TopDownCamera::Update( SViewParams& viewParams )
@@ -72,57 +84,56 @@ void TopDownCamera::Update( SViewParams& viewParams )
 	gEnv->pHardwareMouse->GetHardwareMousePosition(&mouseX, &mouseY);
 		
 	// static
-	float scrollDelta = m_scrollSpeed * gEnv->pTimer->GetFrameTime();
-		
+	static float scrollDelta = m_scrollSpeed * gEnv->pTimer->GetFrameTime();
+	
+	// Use enum here, e.g. Mouse::TOP_LEFT etc.
 	if (mouseX <= rect.left)
-	{		
-		m_position.x = m_lastPosition.x - scrollDelta;
+	{			
+		m_position += m_leftVector * scrollDelta;
 	}
 	else if (mouseX > rect.left && mouseX < rect.right)
-	{	
-		m_position.x = m_lastPosition.x;
+	{			
+		// m_position.x = m_lastPosition.x;
 	}
 	else if (mouseX >= rect.right)
-	{
-		m_position.x = m_lastPosition.x + scrollDelta;		
+	{		
+		m_position -= m_leftVector * scrollDelta;
 	}
 	
 	if (mouseY >= rect.bottom)
-	{
-		m_position.y = m_lastPosition.y - scrollDelta;		
+	{		
+		m_position -= m_forwardVector * scrollDelta;		
 	}
 	else if (mouseY > rect.top && mouseY < rect.bottom)
-	{	
-		m_position = m_lastPosition;
+	{			
+		// m_position.y = m_lastPosition.y;
 	}
 	else if (mouseY <= rect.top)
-	{
-		m_position.y = m_lastPosition.y + scrollDelta;		
+	{		
+		m_position += m_forwardVector * scrollDelta;		
 	}
 
 	// Now set the height
 	float groundZ;
 	if (getGroundLevel(groundZ))
 		m_position.z = groundZ + m_groundDistance + m_zOffset;
-
-	
-	
+		
 	viewParams.position = m_position;
-	viewParams.rotation = m_rotation;
+	viewParams.rotation = Quat(m_rotation);
 	m_lastPosition = viewParams.position;
 }
 
+// Move this to mouse class, jut check wheel delta from there (store single float "delta" in mouse class)
 void TopDownCamera::OnHardwareMouseEvent( int iX,int iY,EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta )
 {
 	m_zOffset -= static_cast<float>(wheelDelta) * gEnv->pTimer->GetFrameTime();
 	if (m_zOffset > 0)
 		m_zOffset = 0;
 	else if (m_zOffset < -10)
-		m_zOffset = -10;
-
-	CryLogAlways("z offset: %f", m_zOffset);
+		m_zOffset = -10;	
 }
 
+// better to cast the ray from the bottom of the screen? or maybe cast 5 rays (center + corners)?
 bool TopDownCamera::getGroundLevel(float& z)
 {
 	IRenderer* pRenderer = gEnv->pRenderer;

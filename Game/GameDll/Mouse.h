@@ -1,9 +1,11 @@
 #pragma once
 
+#include "IHardwareMouse.h"
+
 namespace hotw
 {
 
-class Mouse
+class Mouse : IHardwareMouseEventListener
 {
 public:
 	Mouse(void);
@@ -17,6 +19,8 @@ public:
 	void getScreenPosition(int& x, int& y);
 	bool getWorldCoords(float& x, float& y, float& z);
 	bool getEnityUnderCursor(EntityId& entityId);
+
+	virtual void OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta);
 
 private:
 
