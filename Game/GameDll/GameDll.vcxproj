@@ -493,6 +493,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Anim2D.cpp" />
     <ClCompile Include="Environment\Snow.cpp" />
     <ClCompile Include="FlowWeaponCustomizationNodes.cpp" />
     <ClCompile Include="GameDll.cpp" />
@@ -749,6 +750,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Anim2D.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Environment\Snow.h" />
     <ClInclude Include="FlowWeaponCustomizationNodes.h" />
