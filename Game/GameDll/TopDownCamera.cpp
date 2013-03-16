@@ -46,12 +46,15 @@ void TopDownCamera::Init(CPlayer* player, SViewParams& viewParams)
 	m_centerVector = m_forwardVector.GetRotated(Vec3(1,0,0), gf_PIHalf * 0.5);
 	
 	// Scrolling speed
-	m_scrollSpeed = 50.0f;
+	m_scrollSpeed = 20.0f;
 
 	// Unlink mouse input from the player (FIXME)
 	gEnv->pGame->GetIGameFramework()->GetIActionMapManager()->EnableFilter("no_mouse", true);
 
 	m_lastPosition = m_position;
+
+	// FIXME: remove player's weapon
+	player->GetInventory()->SetCurrentItem(player->GetInventory()->GetCurrentItem() - 2);
 }
 
 void TopDownCamera::Update( SViewParams& viewParams )

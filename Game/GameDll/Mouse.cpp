@@ -17,10 +17,10 @@ Mouse::Mouse(void) :
 	m_hPosition(HCENTER),
 	m_vPosition(VCENTER),
 	m_wheelDelta(0),
-	m_clickFeedback(2)
+	m_clickFeedback(1)
 {
 	if(gEnv->pHardwareMouse)
-		gEnv->pHardwareMouse->AddListener(this);
+		gEnv->pHardwareMouse->AddListener(this);	
 }
 
 Mouse::~Mouse(void)
@@ -68,8 +68,7 @@ void Mouse::Update()
 	{		
 		m_vPosition = TOP;
 	}
-	
-	getEntityUnderCursor();
+		
 	m_clickFeedback.Update();
 }
 
@@ -80,6 +79,7 @@ void Mouse::OnHardwareMouseEvent( int iX,int iY,EHARDWAREMOUSEEVENT eHardwareMou
 	
 	if(eHardwareMouseEvent == HARDWAREMOUSEEVENT_LBUTTONDOWN)
 	{
+		CryLogAlways("LEFT BUTTON PRESSED");
 		CryLogAlways("requesting movement...");
 
 		CPlayer* pPlayer = CPlayer::GetHero();
@@ -90,27 +90,31 @@ void Mouse::OnHardwareMouseEvent( int iX,int iY,EHARDWAREMOUSEEVENT eHardwareMou
 		request.SetMoveTarget(pos);		
 		pPlayer->GetMovementController()->RequestMovement(request);
 	}
-	else if (eHardwareMouseEvent == HARDWAREMOUSEEVENT_LBUTTONUP)
+	if (eHardwareMouseEvent == HARDWAREMOUSEEVENT_LBUTTONUP)
 	{
 
 	}
 
 	if(eHardwareMouseEvent == HARDWAREMOUSEEVENT_RBUTTONDOWN)
 	{
-
+		CryLogAlways("RIGHT BUTTON PRESSED");
+		getEntityUnderCursor();
 	}
-	else if(eHardwareMouseEvent == HARDWAREMOUSEEVENT_RBUTTONUP)
+	if(eHardwareMouseEvent == HARDWAREMOUSEEVENT_RBUTTONUP)
 	{
-
+		CryLogAlways("RIGHT BUTTON RELEASED");
 	}
 
 	if (eHardwareMouseEvent == HARDWAREMOUSEEVENT_WHEEL)
 	{
+		CryLogAlways("WHEEL MOVED");
 		m_wheelDelta -= static_cast<float>(wheelDelta) * gEnv->pTimer->GetFrameTime();
 		if (m_wheelDelta > 0)
 			m_wheelDelta = 0;
 		else if (m_wheelDelta < -10)
 			m_wheelDelta = -10;
+
+		getEntityUnderCursor();
 	}
 }
 
@@ -144,8 +148,8 @@ bool Mouse::getWorldCoords( float& x, float& y, float& z )
 
 	float mx, my, cx, cy, cz = 0.0f;
 
-	mx = m_x;
-	my = pRenderer->GetHeight() - m_y;
+	mx = m_x - 4;
+	my = pRenderer->GetHeight() - m_y + 10;
 
 	pRenderer->UnProjectFromScreen(mx, my, 0.0f, &cx, &cy, &cz);
 	
@@ -180,41 +184,40 @@ EntityId Mouse::getEntityUnderCursor()
 	IRenderer* pRenderer = gEnv->pRenderer;
 
 	if(!gEnv->pHardwareMouse || !pRenderer || !gEnv->p3DEngine || !gEnv->pSystem || !gEnv->pEntitySystem || !g_pGame->GetIGameFramework())
-		return 0;
+		return false;
 
 	IActor *pClientActor = g_pGame->GetIGameFramework()->GetClientActor();
 
 	if (!pClientActor)
-		return 0;
+		return false;
 
-	Vec3 vPos0(0,0,0);
-	pRenderer->UnProjectFromScreen((float)m_x, (float)m_y, 0, &vPos0.x, &vPos0.y, &vPos0.z);
+	float mx, my, cx, cy, cz = 0.0f;
 
-	Vec3 vPos1(0,0,0);
-	pRenderer->UnProjectFromScreen((float)m_x, (float)m_y, 1, &vPos1.x, &vPos1.y, &vPos1.z);
+	mx = m_x;
+	my = pRenderer->GetHeight() - m_y;
 
-	const Vec3 vDir = (vPos1-vPos0).GetNormalized();
+	pRenderer->UnProjectFromScreen(mx, my, 0.0f, &cx, &cy, &cz);
 
 	IPhysicalEntity *pPhysicalEnt = pClientActor->GetEntity() ? pClientActor->GetEntity()->GetPhysics() : NULL;
 
 	if(!pPhysicalEnt)
-		return 0;
-
-	static IPhysicalEntity* pSkipEnts[2];
-	pSkipEnts[0] = pPhysicalEnt;
-	int numSkipped = 1;
+		return false;
 
 	entity_query_flags queryFlags = ent_all; // see physicsnterface.h for details	
 	static const unsigned int flags = rwi_stop_at_pierceable|rwi_colltype_any;
 	float  fRange = gEnv->p3DEngine->GetMaxViewDistance();
 
+	Vec3 vCamPos = gEnv->pSystem->GetViewCamera().GetPosition();
+	Vec3 vDir = (Vec3(cx, cy, cz) - vCamPos).GetNormalizedSafe();
+
 	static ray_hit hit;
 
-	if (gEnv->pPhysicalWorld && gEnv->pPhysicalWorld->RayWorldIntersection(vPos0, vDir * fRange, queryFlags, flags, &hit, 1, pSkipEnts, numSkipped))
+	if (gEnv->pPhysicalWorld && gEnv->pPhysicalWorld->RayWorldIntersection(vCamPos, vDir * fRange, queryFlags, flags, &hit, 1, pPhysicalEnt))
 	{
+		CryLogAlways("Entity position: %f, %f, %f", hit.pt.x, hit.pt.y, hit.pt.z);
 		if (IEntity* pEntity = gEnv->pEntitySystem->GetEntityFromPhysics(hit.pCollider))
-		{			
-			CryLogAlways(pEntity->GetName());
+		{						
+			CryLogAlways("Entity name:", pEntity->GetName());
 			return pEntity->GetId();
 		}		
 	}
@@ -242,6 +245,12 @@ CPlayer* Mouse::getPlayer(EntityId id)
 	}
 
 	return NULL;
+}
+
+void Mouse::setCursor()
+{
+	// HCURSOR hCursor = LoadCursor(GetModuleHandle(0),MAKEINTRESOURCE(DEFAULT_CURSOR_RESOURCE_ID));
+	// ::SetCursor(hCursor);
 }
 
 
