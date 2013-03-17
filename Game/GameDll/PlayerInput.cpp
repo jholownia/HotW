@@ -200,7 +200,7 @@ void CPlayerInput::ApplyMovement(Vec3 delta)
 	m_deltaMovement.z = 0;
 
 	// (jh) debug: this should draw but it dissapers...
-	IRenderer* renderer = gEnv->pRenderer;
+	// IRenderer* renderer = gEnv->pRenderer;
 	// renderer->Set2DMode(true, renderer->GetWidth(), renderer->GetHeight());
 	//static float color[] = {1,1,1,1};
 	//renderer->Draw2dLabel(100,50,1.5,color,false,"m_deltaMovement:%f,%f (requested:%f,%f", m_deltaMovement.x, m_deltaMovement.y,delta.x,delta.y);

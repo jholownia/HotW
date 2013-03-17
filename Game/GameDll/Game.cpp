@@ -771,6 +771,11 @@ void CGame::OnPostUpdate(float fDeltaTime)
 {
 	//update camera system
 	//m_pCameraManager->Update();
+
+	// (jh) this works!
+	// ITexture* texture = gEnv->pRenderer->EF_LoadTexture("Textures/click.dds");
+	// gEnv->pRenderer->Draw2dImage(200, 200, 128, 128, texture->GetTextureID());
+	
 }
 
 void CGame::OnSaveGame(ISaveGame* pSaveGame)

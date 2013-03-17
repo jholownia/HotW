@@ -20,7 +20,9 @@ Mouse::Mouse(void) :
 	m_clickFeedback(1)
 {
 	if(gEnv->pHardwareMouse)
-		gEnv->pHardwareMouse->AddListener(this);	
+		gEnv->pHardwareMouse->AddListener(this);
+
+	gEnv->pHardwareMouse->ConfineCursor(true);
 }
 
 Mouse::~Mouse(void)
@@ -30,14 +32,19 @@ Mouse::~Mouse(void)
 }
 
 void Mouse::Update()
-{
+{	
 	IRenderer* renderer = gEnv->pRenderer;
 		
 	int width = renderer->GetWidth();
 	int height = renderer->GetHeight();
 
+	// Get window rectangle and add some margins
 	RECT rect;
 	GetWindowRect((HWND)renderer->GetHWND(), &rect);
+	rect.left += 10;
+	rect.right -= 10;
+	rect.top += 35;
+	rect.bottom -= 10;
 
 	// Absolute mouse position
 	float mouseX, mouseY;
@@ -89,6 +96,7 @@ void Mouse::OnHardwareMouseEvent( int iX,int iY,EHARDWAREMOUSEEVENT eHardwareMou
 		CMovementRequest request;
 		request.SetMoveTarget(pos);		
 		pPlayer->GetMovementController()->RequestMovement(request);
+		setCursor();
 	}
 	if (eHardwareMouseEvent == HARDWAREMOUSEEVENT_LBUTTONUP)
 	{
@@ -249,8 +257,8 @@ CPlayer* Mouse::getPlayer(EntityId id)
 
 void Mouse::setCursor()
 {
-	// HCURSOR hCursor = LoadCursor(GetModuleHandle(0),MAKEINTRESOURCE(DEFAULT_CURSOR_RESOURCE_ID));
-	// ::SetCursor(hCursor);
+	HCURSOR hCursor = LoadCursor(GetModuleHandle(0),MAKEINTRESOURCE(106));
+	::SetCursor(hCursor);
 }
 
 

@@ -1562,6 +1562,7 @@
     <None Include="..\Launcher\Cursor_White.cur" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
+    <None Include="nodrop.cur" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameDll.rc" />
